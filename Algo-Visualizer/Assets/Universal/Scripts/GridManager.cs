@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
     [SerializeField] private int _width, _height, _extraGrids;
 
     [SerializeField] private Tile _tilePrefab;
+
+    public 
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +30,7 @@ public class GridManager : MonoBehaviour
             for(int y=0; y<totalheight; y++){
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x,0,y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
-                if(x>_extraGrids && x<totalwidth-_extraGrids && y>_extraGrids && y<totalheight-_extraGrids){
+                if(x>_extraGrids-1 && x<totalwidth-_extraGrids && y>_extraGrids-1 && y<totalheight-_extraGrids){
                     var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                     spawnedTile.Init(isOffset);
                 }
