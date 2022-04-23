@@ -9,6 +9,7 @@ public class VersionDisplay : MonoBehaviour
 
     TextMeshProUGUI version;
     void Start() {
+        //This will display the current version number on the UI
         version = gameObject.GetComponent<TextMeshProUGUI>();
         version.SetText(Application.version);
     }

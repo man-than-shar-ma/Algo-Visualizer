@@ -5,8 +5,13 @@ using UnityEngine.AI;
 
 public class navcontroller : MonoBehaviour
 {
-    public Camera cam;
-    public NavMeshAgent agent;
+    Camera cam;
+    NavMeshAgent agent;
+
+    void Start() {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
+    }
 
     // Update is called once per frame
     void Update()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 public class GridManager : MonoBehaviour
 {
@@ -9,11 +10,16 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private Tile _tilePrefab;
 
-    public 
+    [SerializeField] private GameObject TilesHolder;
+
+    // public NavMeshSurface surface;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        //This will generate the grid from the tiles prefab
         GenerateGrid();
+        // surface.BuildNavMesh();
     }
 
     // // Update is called once per frame
@@ -30,6 +36,8 @@ public class GridManager : MonoBehaviour
             for(int y=0; y<totalheight; y++){
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x,0,y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
+                spawnedTile.transform.parent = TilesHolder.transform;
+                
                 if(x>_extraGrids-1 && x<totalwidth-_extraGrids && y>_extraGrids-1 && y<totalheight-_extraGrids){
                     var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                     spawnedTile.Init(isOffset);
