@@ -150,9 +150,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2100968407}
   - {fileID: 1804975724}
   - {fileID: 1480912391}
+  - {fileID: 2100968407}
   - {fileID: 810466615}
   - {fileID: 868861726}
   m_Father: {fileID: 0}
@@ -277,8 +277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60994011d3496fe47bc8c37964134da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfElements: 10
-  element: {fileID: 3097882352854526382, guid: 9ea1ae1f30a987f4099475e9527ad46e, type: 3}
+  numOfElements: 15
+  element: {fileID: -1530097690593281832, guid: 9ea1ae1f30a987f4099475e9527ad46e, type: 3}
+  elementsHolder: {fileID: 1480912390}
+  gridManager: {fileID: 2100968408}
+  runtimeNavmesh: {fileID: 810466616}
 --- !u!1 &1118772815
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,12 +398,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480912390}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4462342, y: 0.3615284, z: 6.9933624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456939035}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1804975723
 GameObject:
@@ -430,7 +433,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456939035}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1893847349
 GameObject:
@@ -510,7 +513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893847349}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 3, y: 5, z: -5}
+  m_LocalPosition: {x: 0, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -559,7 +562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456939035}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2100968408
 MonoBehaviour:
@@ -574,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _width: 10
-  _height: 5
+  _height: 3
   _extraGrids: 2
   _tilePrefab: {fileID: 1707629807340253882, guid: ad040474abb12794cb6c2511814572af, type: 3}
-  TilesHolder: {fileID: 1804975723}
+  tilesHolder: {fileID: 1804975723}

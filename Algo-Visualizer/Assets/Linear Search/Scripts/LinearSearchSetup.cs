@@ -5,27 +5,44 @@ using UnityEngine;
 public class LinearSearchSetup : MonoBehaviour
 {
     [SerializeField] private int numOfElements;
-    // [SerializeField] private 
-    // [SerializeField] private GridManager gridManager;
-    [SerializeField] private GameObject element;
 
-    float startposx =2;
+    [SerializeField] private Element element;
+
+    [SerializeField] private GameObject elementsHolder;
+
+    float startposx = 2;
     float startposy = 1;
     float startposz = 4;
+
+    public GridManager gridManager;
+    public RuntimeNavmesh runtimeNavmesh;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        while(numOfElements!=0){
-            Instantiate(element, new Vector3(startposx++,startposy,startposz), Quaternion.identity);
-            numOfElements--;
-        }
+
+        gridManager._width = numOfElements;
+        gridManager._height = 3 ;
+        gridManager.GenerateGrid();
+
+        startposx = gridManager._extraGrids;
+        startposz = gridManager._extraGrids+1;
+
+        runtimeNavmesh.buildMeshandAgent();
+        
+        generateElements();
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void generateElements(){
+        int totalElements = numOfElements;
+        while(numOfElements!=0){
+            var elementObject = Instantiate(element, new Vector3(startposx++,startposy,startposz), Quaternion.identity);
+            elementObject.name = $"Element {totalElements - numOfElements}";
+            elementObject.transform.parent = elementsHolder.transform;
+            elementObject.elementValueSet((totalElements - numOfElements).ToString());
+            numOfElements--;
+        }
     }
 }
