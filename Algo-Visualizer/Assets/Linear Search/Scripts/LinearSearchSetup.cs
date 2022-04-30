@@ -11,7 +11,7 @@ public class LinearSearchSetup : MonoBehaviour
     [SerializeField] private GameObject elementsHolder;
 
     float startposx = 2;
-    float startposy = 1;
+    float startposy = 1.5f;
     float startposz = 4;
 
     public GridManager gridManager;
