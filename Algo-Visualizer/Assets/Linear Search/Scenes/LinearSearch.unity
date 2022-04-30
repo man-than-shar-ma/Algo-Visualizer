@@ -376,6 +376,7 @@ MonoBehaviour:
   numOfElements: 15
   element: {fileID: 740940779593125914, guid: dbec3a212bd8b87418ed7ba0eb0ddd4b, type: 3}
   elementsHolder: {fileID: 1480912390}
+  tilesHolder: {fileID: 1804975723}
   gridManager: {fileID: 2100968408}
   runtimeNavmesh: {fileID: 810466616}
 --- !u!1 &1118772815

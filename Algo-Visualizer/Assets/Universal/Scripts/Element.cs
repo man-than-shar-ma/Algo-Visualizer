@@ -14,7 +14,7 @@ public class Element : MonoBehaviour
         cam = Camera.main;
     }
 
-    public void elementValueSet(string text){
+    public void setElementValue(string text){
         tmprovalue.SetText(text);
     }
 
