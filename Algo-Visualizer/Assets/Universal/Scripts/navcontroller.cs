@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class navcontroller : MonoBehaviour
+public class NavController : MonoBehaviour
 {
     Camera cam;
     NavMeshAgent agent;
@@ -16,13 +16,17 @@ public class navcontroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)){
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        // if(Input.GetMouseButtonDown(0)){
+        //     Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        //     RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit)){
-                agent.SetDestination(hit.point);
-            }
-        }
+        //     if(Physics.Raycast(ray, out hit)){
+        //         agent.SetDestination(hit.point);
+        //     }
+        // }
+    }
+
+    public static void moveToVector3(NavMeshAgent agent, Vector3 pos){
+        agent.SetDestination(pos);
     }
 }

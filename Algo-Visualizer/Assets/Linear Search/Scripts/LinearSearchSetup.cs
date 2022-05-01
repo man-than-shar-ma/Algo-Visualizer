@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.AI;
 
 public class LinearSearchSetup : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class LinearSearchSetup : MonoBehaviour
     [SerializeField] private GameObject elementsHolder;
     [SerializeField] private GameObject tilesHolder;
 
+    [SerializeField] private TextMeshProUGUI bartext;
+
     private int[] elementArray;
 
     float startposx = 2;
@@ -20,10 +24,27 @@ public class LinearSearchSetup : MonoBehaviour
     public GridManager gridManager;
     public RuntimeNavmesh runtimeNavmesh;
 
+    NavMeshAgent agent;
+
+    int key = 0;
+
+    WaitForSeconds delay1 = new WaitForSeconds(1);
+    WaitForSeconds delay2 = new WaitForSeconds(2);
+    WaitForSeconds delay3 = new WaitForSeconds(3);
+    WaitForSeconds delay4 = new WaitForSeconds(4);
+    WaitForSeconds delay5 = new WaitForSeconds(5);
+    WaitForSeconds delay10 = new WaitForSeconds(10);
+    WaitForSeconds delay15 = new WaitForSeconds(15);
+    WaitForSeconds delay20 = new WaitForSeconds(20);
+    WaitForSeconds delay30 = new WaitForSeconds(30);
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        bartext.SetText("Linear Search Algorithm");
+
         gridManager._width = numOfElements;
         gridManager._height = 3 ;
         gridManager.GenerateGrid();
@@ -34,23 +55,32 @@ public class LinearSearchSetup : MonoBehaviour
         setTileIndex();
 
         runtimeNavmesh.buildMeshandAgent();
+
+        agent = GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>();
+
+        startposy = agent.transform.position.y;
         
         elementArray = new int[numOfElements];
         fillRandomData(elementArray);
-        int key = itemToFind(elementArray);
+        key = itemToFind(elementArray);
         generateElements();
         
     }
 
     void generateElements(){
+        float x = startposx;
+        float y = startposy;
+        float z = startposz;
+
         int totalElements = numOfElements;
-        while(numOfElements!=0){
-            var elementObject = Instantiate(element, new Vector3(startposx++,startposy,startposz), Quaternion.identity);
-            elementObject.name = $"Element {totalElements - numOfElements}";
+        int tnumOfElements = numOfElements;
+        while(tnumOfElements!=0){
+            var elementObject = Instantiate(element, new Vector3(x++,y,z), Quaternion.identity);
+            elementObject.name = $"Element {totalElements - tnumOfElements}";
             elementObject.transform.parent = elementsHolder.transform;
             // elementObject.elementValueSet((totalElements - numOfElements).ToString());
-            elementObject.setElementValue(elementArray[totalElements - numOfElements].ToString());
-            numOfElements--;
+            elementObject.setElementValue(elementArray[totalElements - tnumOfElements].ToString());
+            tnumOfElements--;
         }
     }
 
@@ -59,6 +89,7 @@ public class LinearSearchSetup : MonoBehaviour
             arr[i] = Random.Range(1,101);
         }
     }
+
 
     int itemToFind(int[] arr){
         int val;
@@ -78,5 +109,47 @@ public class LinearSearchSetup : MonoBehaviour
             Tile tile = tilesHolder.transform.Find($"Tile {x++} {y}").GetComponent<Tile>();
             tile.setElementValue(i.ToString());
         }
+    }
+
+    public void PlayAlgorithm(){
+        StopAllCoroutines();
+        StartCoroutine(LinearSearch());
+    }
+
+    IEnumerator LinearSearch(){
+
+        bartext.SetText($"Item to find (key): {key}");
+        
+        yield return delay5;
+
+        float x = startposx;
+        float y = startposy;
+        float z = startposz-1;
+        int index = 0;
+
+        while(index<numOfElements){
+            Vector3 pos = new Vector3(x++,y,z);
+            bartext.SetText($"Moving Agent to Element with index {index}");
+            NavController.moveToVector3(agent, pos);
+            yield return new WaitUntil(() => agent.transform.position == pos);
+            yield return delay4;
+
+            bartext.SetText($"Comparing value of Element {elementArray[index]} with key {key}");
+            yield return delay4;
+
+            if(elementArray[index] == key){
+                bartext.SetText($"Item {key} found at index location {index}");
+                break;
+            }
+            else{
+                bartext.SetText($"Item {key} not found at index location {index}");
+                yield return delay4;
+                index++;
+            }
+        }
+        if(index>= numOfElements){
+            bartext.SetText($"Item {key} not present in the available elements");
+        }
+        yield return null;
     }
 }
