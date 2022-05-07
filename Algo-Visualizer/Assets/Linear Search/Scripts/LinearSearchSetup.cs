@@ -15,6 +15,8 @@ public class LinearSearchSetup : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bartext;
 
+    public bool pause = false;
+
     private int[] elementArray;
 
     float startposx = 2;
@@ -113,14 +115,19 @@ public class LinearSearchSetup : MonoBehaviour
 
     public void PlayAlgorithm(){
         StopAllCoroutines();
+        pause = false;
         StartCoroutine(LinearSearch());
     }
 
-    IEnumerator LinearSearch(){
+    public void InvertPause(){
+        pause = !pause;
+    }
 
-        bartext.SetText($"Item to find (key): {key}");
+    IEnumerator LinearSearch(){
+        bartext.SetText($"Item to find : {key}");
         
         yield return delay5;
+        yield return new WaitUntil(() => pause == false);
 
         float x = startposx;
         float y = startposy;
@@ -129,26 +136,35 @@ public class LinearSearchSetup : MonoBehaviour
 
         while(index<numOfElements){
             Vector3 pos = new Vector3(x++,y,z);
-            bartext.SetText($"Moving Agent to Element with index {index}");
+            bartext.SetText($"Moving Agent to index {index}");
             NavController.moveToVector3(agent, pos);
             yield return new WaitUntil(() => agent.transform.position == pos);
             yield return delay4;
+            yield return new WaitUntil(() => pause == false);
 
-            bartext.SetText($"Comparing value of Element {elementArray[index]} with key {key}");
+            bartext.SetText($"is {elementArray[index]} == {key} ?");
             yield return delay4;
+            yield return new WaitUntil(() => pause == false);
 
             if(elementArray[index] == key){
-                bartext.SetText($"Item {key} found at index location {index}");
+                bartext.SetText($"Yes");
+                yield return delay2;
+                yield return new WaitUntil(() => pause == false);
+                bartext.SetText($"{key} found at index {index}");
                 break;
             }
             else{
-                bartext.SetText($"Item {key} not found at index location {index}");
+                bartext.SetText($"No");
+                yield return delay2;
+                yield return new WaitUntil(() => pause == false);
+                bartext.SetText($"{key} not found at index {index}");
                 yield return delay4;
+                yield return new WaitUntil(() => pause == false);
                 index++;
             }
         }
         if(index>= numOfElements){
-            bartext.SetText($"Item {key} not present in the available elements");
+            bartext.SetText($"{key} not present in the available elements");
         }
         yield return null;
     }
