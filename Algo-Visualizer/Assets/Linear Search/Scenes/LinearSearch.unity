@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surface: {fileID: 456939036}
-  agentPrefab: {fileID: 7773187841204523407, guid: 090219913d6aa594fbc80dbec9e9184b, type: 3}
+  agentPrefab: {fileID: 2472770976161394049, guid: a2f7055706a02384cab07a710dbfb8ea, type: 3}
 --- !u!1 &868861725
 GameObject:
   m_ObjectHideFlags: 0

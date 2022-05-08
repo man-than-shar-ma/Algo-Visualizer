@@ -15,7 +15,9 @@ public class LinearSearchSetup : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bartext;
 
-    public bool pause = false;
+    [SerializeField] private float boxoffset = 0.5f;
+
+    bool pause = false;
 
     private int[] elementArray;
 
@@ -71,7 +73,7 @@ public class LinearSearchSetup : MonoBehaviour
 
     void generateElements(){
         float x = startposx;
-        float y = startposy;
+        float y = startposy + boxoffset;
         float z = startposz;
 
         int totalElements = numOfElements;
