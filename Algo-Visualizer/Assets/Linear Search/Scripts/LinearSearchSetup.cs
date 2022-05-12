@@ -14,12 +14,12 @@ public class LinearSearchSetup : MonoBehaviour
     [SerializeField] private GameObject tilesHolder;
 
     [SerializeField] private TextMeshProUGUI bartext;
-
-    [SerializeField] private float boxoffset = 0.5f;
+    
 
     bool pause = false;
 
     private int[] elementArray;
+    private Transform[] elementObjectArray;
 
     float startposx = 2;
     float startposy = 1.5f;
@@ -31,6 +31,8 @@ public class LinearSearchSetup : MonoBehaviour
     NavMeshAgent agent;
 
     int key = 0;
+
+   
 
     WaitForSeconds delay1 = new WaitForSeconds(1);
     WaitForSeconds delay2 = new WaitForSeconds(2);
@@ -67,17 +69,19 @@ public class LinearSearchSetup : MonoBehaviour
         elementArray = new int[numOfElements];
         fillRandomData(elementArray);
         key = itemToFind(elementArray);
+        elementObjectArray = new Transform[numOfElements];
         generateElements();
         
     }
 
     void generateElements(){
         float x = startposx;
-        float y = startposy + boxoffset;
+        float y = startposy;
         float z = startposz;
 
         int totalElements = numOfElements;
         int tnumOfElements = numOfElements;
+        int i=0;
         while(tnumOfElements!=0){
             var elementObject = Instantiate(element, new Vector3(x++,y,z), Quaternion.identity);
             elementObject.name = $"Element {totalElements - tnumOfElements}";
@@ -85,6 +89,8 @@ public class LinearSearchSetup : MonoBehaviour
             // elementObject.elementValueSet((totalElements - numOfElements).ToString());
             elementObject.setElementValue(elementArray[totalElements - tnumOfElements].ToString());
             tnumOfElements--;
+            elementObjectArray[i] = elementObject.GetComponent<Transform>();
+            i++;
         }
     }
 
@@ -138,9 +144,21 @@ public class LinearSearchSetup : MonoBehaviour
 
         while(index<numOfElements){
             Vector3 pos = new Vector3(x++,y,z);
+            
             bartext.SetText($"Moving Agent to index {index}");
-            NavController.moveToVector3(agent, pos);
+            agent.GetComponent<NavController>().moveToVector3(pos);
             yield return new WaitUntil(() => agent.transform.position == pos);
+            yield return delay1;
+            
+            //looking at the box
+            Vector3 lookpos = elementObjectArray[index].position;
+            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos));
+            yield return delay1;
+            yield return new WaitUntil(() => pause == false);
+
+
+            //Lifting the box up            
+            yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().LiftElementUp());
             yield return delay4;
             yield return new WaitUntil(() => pause == false);
 
@@ -160,12 +178,18 @@ public class LinearSearchSetup : MonoBehaviour
                 yield return delay2;
                 yield return new WaitUntil(() => pause == false);
                 bartext.SetText($"{key} not found at index {index}");
+
+                //Droping the box down
+                StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown());
+
                 yield return delay4;
                 yield return new WaitUntil(() => pause == false);
                 index++;
             }
         }
         if(index>= numOfElements){
+            //Droping the box down
+            StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown());
             bartext.SetText($"{key} not present in the available elements");
         }
         yield return null;
