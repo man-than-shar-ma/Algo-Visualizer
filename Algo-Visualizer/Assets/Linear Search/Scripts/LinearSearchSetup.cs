@@ -14,6 +14,9 @@ public class LinearSearchSetup : MonoBehaviour
     [SerializeField] private GameObject tilesHolder;
 
     [SerializeField] private TextMeshProUGUI bartext;
+
+    [Range(2f, 0.01f)]
+    [SerializeField] private float algoSpeed = 1;
     
 
     bool pause = false;
@@ -34,21 +37,31 @@ public class LinearSearchSetup : MonoBehaviour
 
    
 
-    WaitForSeconds delay1 = new WaitForSeconds(1);
-    WaitForSeconds delay2 = new WaitForSeconds(2);
-    WaitForSeconds delay3 = new WaitForSeconds(3);
-    WaitForSeconds delay4 = new WaitForSeconds(4);
-    WaitForSeconds delay5 = new WaitForSeconds(5);
-    WaitForSeconds delay10 = new WaitForSeconds(10);
-    WaitForSeconds delay15 = new WaitForSeconds(15);
-    WaitForSeconds delay20 = new WaitForSeconds(20);
-    WaitForSeconds delay30 = new WaitForSeconds(30);
+    WaitForSeconds delay1;
+    WaitForSeconds delay2;
+    WaitForSeconds delay3;
+    WaitForSeconds delay4;
+    WaitForSeconds delay5;
+    WaitForSeconds delay10;
+    WaitForSeconds delay15;
+    WaitForSeconds delay20;
+    WaitForSeconds delay30;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        delay1 = new WaitForSeconds(1 * algoSpeed);
+        delay2 = new WaitForSeconds(2 * algoSpeed);
+        delay3 = new WaitForSeconds(3 * algoSpeed);
+        delay4 = new WaitForSeconds(4 * algoSpeed);
+        delay5 = new WaitForSeconds(5 * algoSpeed);
+        delay10 = new WaitForSeconds(10 * algoSpeed);
+        delay15 = new WaitForSeconds(15 * algoSpeed);
+        delay20 = new WaitForSeconds(20 * algoSpeed);
+        delay30 = new WaitForSeconds(30 * algoSpeed);
+
         bartext.SetText("Linear Search Algorithm");
 
         gridManager._width = numOfElements;
@@ -124,6 +137,12 @@ public class LinearSearchSetup : MonoBehaviour
     public void PlayAlgorithm(){
         StopAllCoroutines();
         pause = false;
+        float x = startposx;
+        float y = startposy;
+        float z = startposz;
+        int i=0;
+        while(i<numOfElements)
+            elementObjectArray[i++].position = new Vector3(x++,y,z);
         StartCoroutine(LinearSearch());
     }
 
@@ -188,8 +207,6 @@ public class LinearSearchSetup : MonoBehaviour
             }
         }
         if(index>= numOfElements){
-            //Droping the box down
-            StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown());
             bartext.SetText($"{key} not present in the available elements");
         }
         yield return null;
