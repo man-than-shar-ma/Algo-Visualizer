@@ -11,6 +11,9 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField]
     GameObject algorithmsPanel;
+
+    [SerializeField]
+    GameObject optionsPanel;
     
     public void playscene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -28,13 +31,20 @@ public class MenuManager : MonoBehaviour
 
     public void GoToAlgorithmsPanel(){
         mainMenuPanel.SetActive(false);
+        optionsPanel.SetActive(false);
         algorithmsPanel.SetActive(true);
     }
 
     public void GoToMainMenu(){
         algorithmsPanel.SetActive(false);
+        optionsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
     }
 
-
+    public void GoToOptionsPanel(){
+        mainMenuPanel.SetActive(false);
+        algorithmsPanel.SetActive(false);
+        optionsPanel.SetActive(true);
+    }
+    
 }
