@@ -32,15 +32,18 @@ public class CameraFollow : MonoBehaviour
     [Range (0.05f, 1f)]
     public float camControlSpeed = 0.25f;
     
+
     void FixedUpdate() {
         if(!defaultFollowMode){
             offsetx += Input.GetAxisRaw("Horizontal") * camControlSpeed;
             offsetz += Input.GetAxisRaw("Vertical") * camControlSpeed;
             offsety += Input.GetAxisRaw("Mouse ScrollWheel") * camControlSpeed;
-        }
-        if(!target)
+        }        
+        if(!target && GameObject.FindGameObjectsWithTag("Player").Length > 0){
             target = GameObject.FindGameObjectWithTag("Player").transform;
-        else{
+        }
+            
+        else if(target){
             Vector3 offset;
             if(defaultFollowMode){
                 if(defaultTopMode){

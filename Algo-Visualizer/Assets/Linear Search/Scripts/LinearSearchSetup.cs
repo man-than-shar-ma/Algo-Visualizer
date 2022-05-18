@@ -8,6 +8,8 @@ public class LinearSearchSetup : MonoBehaviour
 {
     [SerializeField] private int numOfElements;
 
+    [SerializeField] private TMP_InputField arraysizeCustom;
+
     [SerializeField] private Element element;
 
     [SerializeField] private GameObject elementsHolder;
@@ -15,7 +17,7 @@ public class LinearSearchSetup : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bartext;
 
-    [Range(2f, 0.01f)]
+    [Range(1f, 0.01f)]
     [SerializeField] private float algoSpeed = 1;
     
 
@@ -35,8 +37,6 @@ public class LinearSearchSetup : MonoBehaviour
 
     int key = 0;
 
-   
-
     WaitForSeconds delay1;
     WaitForSeconds delay2;
     WaitForSeconds delay3;
@@ -50,8 +50,11 @@ public class LinearSearchSetup : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void StartLinearSearchSetup()
     {
+        if(arraysizeCustom.text != ""){
+            numOfElements = int.Parse(arraysizeCustom.text);
+        }
         delay1 = new WaitForSeconds(1 * algoSpeed);
         delay2 = new WaitForSeconds(2 * algoSpeed);
         delay3 = new WaitForSeconds(3 * algoSpeed);
@@ -210,5 +213,17 @@ public class LinearSearchSetup : MonoBehaviour
             bartext.SetText($"{key} not present in the available elements");
         }
         yield return null;
+    }
+
+    public void setAlgoSpeed(float algoSpeed){
+        delay1 = new WaitForSeconds(1 * algoSpeed);
+        delay2 = new WaitForSeconds(2 * algoSpeed);
+        delay3 = new WaitForSeconds(3 * algoSpeed);
+        delay4 = new WaitForSeconds(4 * algoSpeed);
+        delay5 = new WaitForSeconds(5 * algoSpeed);
+        delay10 = new WaitForSeconds(10 * algoSpeed);
+        delay15 = new WaitForSeconds(15 * algoSpeed);
+        delay20 = new WaitForSeconds(20 * algoSpeed);
+        delay30 = new WaitForSeconds(30 * algoSpeed);
     }
 }

@@ -21,7 +21,10 @@ public class Element : MonoBehaviour
     }
 
     void Update(){
-        canvas.transform.rotation = Quaternion.LookRotation(canvas.transform.position - cam.transform.position);
+        canvas.transform.rotation = Quaternion.LookRotation(new Vector3(0, canvas.transform.position.y - cam.transform.position.y, canvas.transform.position.z - cam.transform.position.z));
+        float size = (cam.transform.position - transform.position).magnitude;
+        tmprovalue.transform.localScale = new Vector3(size/5, size/5,size/5);
+
     }
 
     public IEnumerator LiftElementUp(){

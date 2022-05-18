@@ -15,9 +15,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     GameObject optionsPanel;
     
-    public void playscene(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+    // public void playscene(){
+    //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    // }
     
     public void quit(){
         //function for quitting the application
@@ -26,7 +26,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void BackToMenu(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainUI");
     }
 
     public void GoToAlgorithmsPanel(){
