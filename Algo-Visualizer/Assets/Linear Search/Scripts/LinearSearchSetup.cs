@@ -169,7 +169,8 @@ public class LinearSearchSetup : MonoBehaviour
             
             bartext.SetText($"Moving Agent to index {index}");
             agent.GetComponent<NavController>().moveToVector3(pos);
-            yield return new WaitUntil(() => agent.transform.position == pos);
+            // Debug.Log(pos + " " + agent.transform.position);
+            yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
             yield return delay1;
             
             //looking at the box
