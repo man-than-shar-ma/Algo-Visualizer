@@ -36,21 +36,26 @@ The search space always reduces to half in every iteration."
     string[] algoAlgorithm = 
     {   
 
-        @"Linear Search ( Array A, Value x)
-        Step 1: Set i to 1
-        Step 2: if i > n then go to step 7
-        Step 3: if A[i] = x then go to step 6
-        Step 4: Set i to i + 1
-        Step 5: Go to Step 2
-        Step 6: Print Element x Found at index i and go to step 8
-        Step 7: Print element not found
-        Step 8: Exit",
+@"Linear Search ( Array A, Value x)
+    Step 1: Set i to 1
+    Step 2: if i > n then 
+        go to step 7
+    Step 3: if A[i] = x then 
+        go to step 6
+    Step 4: Set i to i + 1
+    Step 5: Go to Step 2
+    Step 6: Print Element x Found at index i and 
+        go to step 8
+    Step 7: Print element not found
+    Step 8: Exit",
 
-        @"Binary_Search(a, lower_bound, upper_bound, val) // 'a' is the given array, 'lower_bound' is the index of the first array element, 'upper_bound' is the index of the last array element, 'val' is the value to search  
-        Step 1: set beg = lower_bound, end = upper_bound, pos = - 1  
-        Step 2: repeat steps 3 and 4 while beg <=end  
-        Step 3: set mid = (beg + end)/2  
-        Step 4: if a[mid] = val  
+@"Binary_Search(a, lower_bound, 
+    upper_bound, val)
+    Step 1: set beg = lower_bound, 
+        end = upper_bound, pos = - 1  
+    Step 2: repeat steps 3 and 4 while beg <=end  
+    Step 3: set mid = (beg + end)/2  
+    Step 4: if a[mid] = val  
         set pos = mid  
         print pos  
         go to step 6  
@@ -60,10 +65,10 @@ The search space always reduces to half in every iteration."
         set beg = mid + 1  
         [end of if]  
         [end of loop]  
-        Step 5: if pos = -1  
+    Step 5: if pos = -1  
         print 'value is not present in the array'
         [end of if]  
-        Step 6: exit"
+    Step 6: exit"
 
     };
 
@@ -98,8 +103,8 @@ The search space always reduces to half in every iteration."
             algo.transform.localScale = Vector3.one;
 
             algorithm[i] = algo.GetComponent<Algorithm>();
-            algorithm[i].setAlgoName(algoName[i]);
-            algorithm[i].setAlgoDescription(algoDescription[i]);
+            algorithm[i].setAlgoName("\t"+algoName[i]);
+            algorithm[i].setAlgoDescription("\t"+algoDescription[i]);
             algorithm[i].setAlgoAlgorithm(algoAlgorithm[i]);
             algorithm[i].setAlgoTimeComplexity(algoTimeComplexity[i]);
             algorithm[i].setAlgoSpaceComplexity(algoSpaceComplexity[i]);

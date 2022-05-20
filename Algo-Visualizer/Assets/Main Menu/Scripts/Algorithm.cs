@@ -88,11 +88,11 @@ public class Algorithm : MonoBehaviour
     }
 
     public void setAlgoDetailedText(AlgoDetailed algodetail){
-        algodetail.tmproadName.SetText($"Name: \n{algoName}");
-        algodetail.tmproadDescription.SetText($"Description: \n{algoDescription}");
-        algodetail.tmproadAlgorithm.SetText($"Algorithm: \n{algoAlgorithm}");
-        algodetail.tmproadTimeComplexity.SetText($"Time Complexity: \n{algoTimeComplexity}");
-        algodetail.tmproadSpaceComplexity.SetText($"Space Complexity: \n{algoSpaceComplexity}");
+        algodetail.tmproadName.SetText($"{algoName}");
+        algodetail.tmproadDescription.SetText($"{algoDescription}");
+        algodetail.tmproadAlgorithm.SetText($"{algoAlgorithm}");
+        algodetail.tmproadTimeComplexity.SetText($"{algoTimeComplexity}");
+        algodetail.tmproadSpaceComplexity.SetText($"{algoSpaceComplexity}");
 
         algodetail.nextSceneButton.onClick.AddListener(() => SceneManager.LoadScene(nextSceneName));
 

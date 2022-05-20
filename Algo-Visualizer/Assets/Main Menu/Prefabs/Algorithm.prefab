@@ -153,6 +153,7 @@ MonoBehaviour:
   algoSpaceComplexity: 
   tmprovalue: {fileID: 3267232585121405487}
   button: {fileID: 3267232584566683909}
+  nextSceneName: 
 --- !u!1 &3267232585121405485
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,8 +221,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Algorithm Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1836e7bde7374b846bb491cc2336caf0, type: 2}
-  m_sharedMaterial: {fileID: 6660806498625106733, guid: 1836e7bde7374b846bb491cc2336caf0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fd18f32a64385874fa253d50404c332c, type: 2}
+  m_sharedMaterial: {fileID: 5245661890910947559, guid: fd18f32a64385874fa253d50404c332c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
