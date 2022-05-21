@@ -14,7 +14,7 @@ public class SettingsManager : MonoBehaviour
     Resolution[] resolutions;
 
 
-    void Start(){
+    void Awake(){
         resolutions = ScreenResolutions.screenResolutions;
 
         resolutionDropdown.ClearOptions();
