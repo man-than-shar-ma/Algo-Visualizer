@@ -2114,7 +2114,7 @@ MonoBehaviour:
   elementsHolder: {fileID: 1480912390}
   tilesHolder: {fileID: 1804975723}
   bartext: {fileID: 2044828554}
-  algoSpeed: 1
+  algoSpeed: 0.01
   gridManager: {fileID: 2100968408}
   runtimeNavmesh: {fileID: 810466616}
 --- !u!1 &884722501

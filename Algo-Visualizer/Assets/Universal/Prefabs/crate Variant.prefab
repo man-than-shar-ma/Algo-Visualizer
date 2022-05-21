@@ -43,17 +43,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tmprovalue: {fileID: 3516047674149228748}
   baseMaterials:
-  - {fileID: 2100000, guid: 47bb4f59eb0998e40a57a49dd33eed96, type: 2}
   - {fileID: 2100000, guid: 0de4edb0f7f66ee4d86ec818cc554f4b, type: 2}
+  - {fileID: 2100000, guid: 47bb4f59eb0998e40a57a49dd33eed96, type: 2}
   redMaterials:
-  - {fileID: 2100000, guid: c59144b2e0943594fb46c2958b987ae9, type: 2}
   - {fileID: 2100000, guid: 4946a730eaa2ec449be577c8baf558e8, type: 2}
+  - {fileID: 2100000, guid: c59144b2e0943594fb46c2958b987ae9, type: 2}
   yellowMaterials:
-  - {fileID: 2100000, guid: bb667ca1dd33e4b4aad0834fb3af733a, type: 2}
   - {fileID: 2100000, guid: 8e4135deca637db47881472f7f8fe3f4, type: 2}
+  - {fileID: 2100000, guid: bb667ca1dd33e4b4aad0834fb3af733a, type: 2}
   greenMaterials:
-  - {fileID: 2100000, guid: deebf2bdd8b81234eb5124cee6c810dc, type: 2}
   - {fileID: 2100000, guid: af9f58b36e8d58049956054a0b9c8d83, type: 2}
+  - {fileID: 2100000, guid: deebf2bdd8b81234eb5124cee6c810dc, type: 2}
   canvas: {fileID: 1875542756724803069}
   boxoffset: 1
   boxMoveSpeed: 1

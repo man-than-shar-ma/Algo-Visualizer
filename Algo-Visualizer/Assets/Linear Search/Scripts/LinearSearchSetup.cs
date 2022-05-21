@@ -18,7 +18,7 @@ public class LinearSearchSetup : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bartext;
 
     [Range(0.01f, 1f)]
-    [SerializeField] private float algoSpeed = 1;
+    [SerializeField] private float algoSpeed = 0.01f;
     private float algoSpeed1to10 = 1;
     
 
