@@ -66,9 +66,6 @@ public class LinearSearchSetup : MonoBehaviour
         delay20 = new WaitForSeconds(0.2f + (1 - algoSpeed) * 20);
         delay30 = new WaitForSeconds(0.3f + (1 - algoSpeed) * 30);
 
-        algoSpeed1to10 = 1 + algoSpeed * 9;
-        CameraFollow.speed = algoSpeed1to10;
-        agent.speed = algoSpeed1to10;
 
         bartext.SetText("Linear Search Algorithm");
 
@@ -84,6 +81,10 @@ public class LinearSearchSetup : MonoBehaviour
         runtimeNavmesh.buildMeshandAgent();
 
         agent = GameObject.FindGameObjectWithTag("Player").GetComponent<NavMeshAgent>();
+
+        algoSpeed1to10 = 1 + algoSpeed * 9;
+        CameraFollow.speed = algoSpeed1to10;
+        agent.speed = algoSpeed1to10;
 
         startposy = agent.transform.position.y;
         
