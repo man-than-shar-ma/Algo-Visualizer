@@ -6,6 +6,13 @@ using TMPro;
 public class Element : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI tmprovalue;
+
+    [SerializeField] Material[] baseMaterials;
+    [SerializeField] Material[] redMaterials;
+    [SerializeField] Material[] yellowMaterials;
+    [SerializeField] Material[] greenMaterials;
+    
+
     [SerializeField] Canvas canvas;
     [SerializeField] private float boxoffset = 1;
     [SerializeField] float boxMoveSpeed = 1;
@@ -18,6 +25,21 @@ public class Element : MonoBehaviour
 
     public void setElementValue(string text){
         tmprovalue.SetText(text);
+    }
+
+    public void setDefaultMaterial(){
+        MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
+        elementMesh.materials = baseMaterials;
+    }
+
+    public void setRedMaterial(){
+        MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
+        elementMesh.materials = redMaterials;
+    }
+
+    public void setGreenMaterial(){
+        MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
+        elementMesh.materials = greenMaterials;
     }
 
     void Update(){
