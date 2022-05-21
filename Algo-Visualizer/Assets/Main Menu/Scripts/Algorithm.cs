@@ -25,6 +25,8 @@ public class Algorithm : MonoBehaviour
     [SerializeField]
     string algoSpaceComplexity = "";
 
+    string algoCppProgram = "";
+
     [SerializeField] 
     TextMeshProUGUI tmprovalue;
 
@@ -74,6 +76,15 @@ public class Algorithm : MonoBehaviour
         algoSpaceComplexity = text;
     }
 
+    public string getCppProgram(){
+        return algoCppProgram;
+    }
+
+    public void setCppProgram(string text){
+        algoCppProgram = text;
+    }
+
+
     public string getNextSceneName(){
         return nextSceneName;
     }
@@ -93,6 +104,7 @@ public class Algorithm : MonoBehaviour
         algodetail.tmproadAlgorithm.SetText($"{algoAlgorithm}");
         algodetail.tmproadTimeComplexity.SetText($"{algoTimeComplexity}");
         algodetail.tmproadSpaceComplexity.SetText($"{algoSpaceComplexity}");
+        algodetail.tmproadCppProgram.text = $"{algoCppProgram}";
 
         algodetail.nextSceneButton.onClick.AddListener(() => SceneManager.LoadScene(nextSceneName));
 

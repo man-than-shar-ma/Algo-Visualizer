@@ -12,6 +12,8 @@ public class AlgoDetailed : MonoBehaviour
     public TextMeshProUGUI tmproadTimeComplexity;
     public TextMeshProUGUI tmproadSpaceComplexity;
 
+    public TMP_InputField tmproadCppProgram;
+
     public Button nextSceneButton;
 
 }
