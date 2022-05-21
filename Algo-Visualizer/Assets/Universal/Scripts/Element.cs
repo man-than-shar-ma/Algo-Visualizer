@@ -37,6 +37,11 @@ public class Element : MonoBehaviour
         elementMesh.materials = redMaterials;
     }
 
+    public void setYellowMaterial(){
+        MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
+        elementMesh.materials = yellowMaterials;
+    }
+
     public void setGreenMaterial(){
         MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
         elementMesh.materials = greenMaterials;
@@ -49,19 +54,19 @@ public class Element : MonoBehaviour
 
     }
 
-    public IEnumerator LiftElementUp(){
+    public IEnumerator LiftElementUp(float speed = 1f){
         Vector3 newpos = new Vector3(transform.position.x, transform.position.y+boxoffset, transform.position.z);
             while(transform.position.y < newpos.y){
-                transform.position = new Vector3(transform.position.x,transform.position.y+boxMoveSpeed*Time.deltaTime, transform.position.z);
+                transform.position = new Vector3(transform.position.x,transform.position.y+boxMoveSpeed*Time.deltaTime*speed, transform.position.z);
                 yield return null;
             }
             transform.position = newpos;
     }
 
-    public IEnumerator DropElementDown(){
+    public IEnumerator DropElementDown(float speed = 1f){
         Vector3 newpos = new Vector3(transform.position.x, transform.position.y-boxoffset, transform.position.z);
             while(transform.position.y > newpos.y){
-                transform.position = new Vector3(transform.position.x,transform.position.y-boxMoveSpeed*Time.deltaTime, transform.position.z);
+                transform.position = new Vector3(transform.position.x,transform.position.y-boxMoveSpeed*Time.deltaTime*speed, transform.position.z);
                 yield return null;
             }
             transform.position = newpos;

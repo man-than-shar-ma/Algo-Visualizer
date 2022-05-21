@@ -8,6 +8,8 @@ public class CameraFollow : MonoBehaviour
     private Transform target;
     public float smoothspeed = 2f;
 
+    public static float speed = 1f;
+
     [SerializeField]
     Vector3 defaultOffset = new Vector3(0,5,-5);
 
@@ -57,7 +59,7 @@ public class CameraFollow : MonoBehaviour
                 offset = new Vector3(offsetx, offsety, offsetz);
             }
             Vector3 desiredPosition = target.position + offset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothspeed * Time.deltaTime);
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothspeed * Time.deltaTime * speed);
             transform.position = smoothedPosition;
         }   
     }

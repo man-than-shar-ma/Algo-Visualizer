@@ -17,8 +17,9 @@ public class LinearSearchSetup : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bartext;
 
-    [Range(1f, 0.01f)]
+    [Range(0.01f, 1f)]
     [SerializeField] private float algoSpeed = 1;
+    private float algoSpeed1to10 = 1;
     
 
     bool pause = false;
@@ -55,15 +56,15 @@ public class LinearSearchSetup : MonoBehaviour
         if(arraysizeCustom.text != ""){
             numOfElements = int.Parse(arraysizeCustom.text);
         }
-        delay1 = new WaitForSeconds(1 * algoSpeed);
-        delay2 = new WaitForSeconds(2 * algoSpeed);
-        delay3 = new WaitForSeconds(3 * algoSpeed);
-        delay4 = new WaitForSeconds(4 * algoSpeed);
-        delay5 = new WaitForSeconds(5 * algoSpeed);
-        delay10 = new WaitForSeconds(10 * algoSpeed);
-        delay15 = new WaitForSeconds(15 * algoSpeed);
-        delay20 = new WaitForSeconds(20 * algoSpeed);
-        delay30 = new WaitForSeconds(30 * algoSpeed);
+        delay1 = new WaitForSeconds(0.01f + (1 - algoSpeed) * 1);
+        delay2 = new WaitForSeconds(0.02f + (1 - algoSpeed) * 2);
+        delay3 = new WaitForSeconds(0.03f + (1 - algoSpeed) * 3);
+        delay4 = new WaitForSeconds(0.04f + (1 - algoSpeed) * 4);
+        delay5 = new WaitForSeconds(0.05f + (1 - algoSpeed) * 5);
+        delay10 = new WaitForSeconds(0.1f + (1 - algoSpeed) * 10);
+        delay15 = new WaitForSeconds(0.15f + (1 - algoSpeed) * 15);
+        delay20 = new WaitForSeconds(0.2f + (1 - algoSpeed) * 20);
+        delay30 = new WaitForSeconds(0.3f + (1 - algoSpeed) * 30);
 
         bartext.SetText("Linear Search Algorithm");
 
@@ -144,8 +145,11 @@ public class LinearSearchSetup : MonoBehaviour
         float y = startposy;
         float z = startposz;
         int i=0;
-        while(i<numOfElements)
-            elementObjectArray[i++].position = new Vector3(x++,y,z);
+        while(i<numOfElements){
+            elementObjectArray[i].position = new Vector3(x++,y,z);
+            elementObjectArray[i].GetComponent<Element>().setDefaultMaterial();
+            i++;
+        }
         StartCoroutine(LinearSearch());
     }
 
@@ -168,6 +172,9 @@ public class LinearSearchSetup : MonoBehaviour
             Vector3 pos = new Vector3(x++,y,z);
             
             bartext.SetText($"Moving Agent to index {index}");
+
+            elementObjectArray[index].GetComponent<Element>().setYellowMaterial();
+
             agent.GetComponent<NavController>().moveToVector3(pos);
             // Debug.Log(pos + " " + agent.transform.position);
             yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
@@ -175,13 +182,13 @@ public class LinearSearchSetup : MonoBehaviour
             
             //looking at the box
             Vector3 lookpos = elementObjectArray[index].position;
-            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos));
+            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
 
             //Lifting the box up            
-            yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().LiftElementUp());
+            yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
             yield return delay4;
             yield return new WaitUntil(() => pause == false);
 
@@ -205,7 +212,7 @@ public class LinearSearchSetup : MonoBehaviour
                 elementObjectArray[index].GetComponent<Element>().setRedMaterial();
 
                 //Droping the box down
-                StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown());
+                StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown(algoSpeed1to10));
 
                 yield return delay4;
                 yield return new WaitUntil(() => pause == false);
@@ -219,14 +226,17 @@ public class LinearSearchSetup : MonoBehaviour
     }
 
     public void setAlgoSpeed(float algoSpeed){
-        delay1 = new WaitForSeconds(1 * algoSpeed);
-        delay2 = new WaitForSeconds(2 * algoSpeed);
-        delay3 = new WaitForSeconds(3 * algoSpeed);
-        delay4 = new WaitForSeconds(4 * algoSpeed);
-        delay5 = new WaitForSeconds(5 * algoSpeed);
-        delay10 = new WaitForSeconds(10 * algoSpeed);
-        delay15 = new WaitForSeconds(15 * algoSpeed);
-        delay20 = new WaitForSeconds(20 * algoSpeed);
-        delay30 = new WaitForSeconds(30 * algoSpeed);
+        delay1 = new WaitForSeconds(0.01f + (1 - algoSpeed) * 1);
+        delay2 = new WaitForSeconds(0.02f + (1 - algoSpeed) * 2);
+        delay3 = new WaitForSeconds(0.03f + (1 - algoSpeed) * 3);
+        delay4 = new WaitForSeconds(0.04f + (1 - algoSpeed) * 4);
+        delay5 = new WaitForSeconds(0.05f + (1 - algoSpeed) * 5);
+        delay10 = new WaitForSeconds(0.1f + (1 - algoSpeed) * 10);
+        delay15 = new WaitForSeconds(0.15f + (1 - algoSpeed) * 15);
+        delay20 = new WaitForSeconds(0.2f + (1 - algoSpeed) * 20);
+        delay30 = new WaitForSeconds(0.3f + (1 - algoSpeed) * 30);
+        algoSpeed1to10 = 1 + algoSpeed * 9;
+        CameraFollow.speed = algoSpeed1to10;
+        agent.speed = algoSpeed1to10;
     }
 }

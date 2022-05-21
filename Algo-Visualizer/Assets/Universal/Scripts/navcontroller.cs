@@ -41,8 +41,8 @@ public class NavController : MonoBehaviour
         transform.GetComponent<NavMeshAgent>().SetDestination(pos);
     }
 
-    public IEnumerator lookAtPoint(Vector3 pos){
-        float degreesPerSecond = 90 * Time.deltaTime;
+    public IEnumerator lookAtPoint(Vector3 pos, float speed = 1f){
+        float degreesPerSecond = 90 * Time.deltaTime * speed;
         Vector3 direction = pos - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         while(transform.rotation != targetRotation){
