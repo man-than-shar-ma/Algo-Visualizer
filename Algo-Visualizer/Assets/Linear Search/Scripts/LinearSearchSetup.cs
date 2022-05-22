@@ -4,11 +4,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 
+
 public class LinearSearchSetup : MonoBehaviour
 {
-    [SerializeField] private int numOfElements;
+    [SerializeField] public TMP_InputField arraysizeCustom;
 
-    [SerializeField] private TMP_InputField arraysizeCustom;
+    [SerializeField] public TMP_InputField arrayValuesCustom;
+
+    [SerializeField] public TMP_InputField arrayKeyCustom;
+
+    [SerializeField] private int numOfElements;
 
     [SerializeField] private Element element;
 
@@ -53,9 +58,12 @@ public class LinearSearchSetup : MonoBehaviour
     // Start is called before the first frame update
     public void StartLinearSearchSetup()
     {
-        if(arraysizeCustom.text != ""){
+        //checking whether the user has entered size or not
+        if(arraysizeCustom.text.Length != 0){
             numOfElements = int.Parse(arraysizeCustom.text);
         }
+
+
         delay1 = new WaitForSeconds(0.01f + (1 - algoSpeed) * 1);
         delay2 = new WaitForSeconds(0.02f + (1 - algoSpeed) * 2);
         delay3 = new WaitForSeconds(0.03f + (1 - algoSpeed) * 3);
@@ -88,9 +96,26 @@ public class LinearSearchSetup : MonoBehaviour
 
         startposy = agent.transform.position.y;
         
+        //checking whether the user has entered the array values or not
         elementArray = new int[numOfElements];
-        fillRandomData(elementArray);
-        key = itemToFind(elementArray);
+        if(arrayValuesCustom.text.Trim().Length !=0){
+                string trimmedString = arrayValuesCustom.text.Trim();
+                string removedBrackets = trimmedString.Substring(1, trimmedString.Length-2);
+                string[] arrayStrings = removedBrackets.Split(',');
+                elementArray =  System.Array.ConvertAll<string, int>(arrayStrings, int.Parse);
+        }
+        else{
+             fillRandomData(elementArray);
+        }
+
+        //checking whether user has entered the key value or not
+        if(arrayKeyCustom.text.Trim().Length !=0){
+            key = int.Parse(arrayKeyCustom.text);
+        }
+        else{
+            key = itemToFind(elementArray);
+        }
+
         elementObjectArray = new Transform[numOfElements];
         generateElements();
         
