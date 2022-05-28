@@ -13,7 +13,7 @@ public class RuntimeNavmesh : MonoBehaviour
 
     public void buildMeshandAgent(){
         surface.BuildNavMesh();
-        agent = Instantiate(agentPrefab, new Vector3(0,1.5f,0), Quaternion.identity);
+        agent = Instantiate(agentPrefab, new Vector3(0,1,0), Quaternion.identity);
         agent.name = "Agent";
         agent.tag = "Player";
     }
