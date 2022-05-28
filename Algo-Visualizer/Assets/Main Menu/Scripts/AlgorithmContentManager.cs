@@ -59,10 +59,10 @@ The search space always reduces to half in every iteration."
         set pos = mid  
         print pos  
         go to step 6  
-        else if a[mid] > val  
-        set end = mid - 1  
-        else  
+        else if a[mid] < val  
         set beg = mid + 1  
+        else  
+        set end = mid - 1  
         [end of if]  
         [end of loop]  
     Step 5: if pos = -1  
@@ -168,7 +168,7 @@ int main()
 
     string[] nextSceneName = {
         "LinearSearch",
-        "MainUI"
+        "BinarySearch"
     };
 
 

@@ -162,7 +162,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter the values of array like [value1,value2,value3]
+  m_text: Enter the values of array like [value1,value2,value3] , The values will
+    be automatically sorted first
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fd18f32a64385874fa253d50404c332c, type: 2}
   m_sharedMaterial: {fileID: 5245661890910947559, guid: fd18f32a64385874fa253d50404c332c, type: 2}
@@ -753,7 +754,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 186295690}
-        m_TargetAssemblyTypeName: LinearSearchMenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: BinarySearchMenuManager, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -1107,12 +1108,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 186295685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ceabaf2e34a0914793542cf952b32a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d4d6b412f337f34a96646d5ebe94c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   customizePanel: {fileID: 1910176304}
   onPlayPanel: {fileID: 75237683}
-  linearSearchSetup: {fileID: 868861727}
+  binarySearchSetup: {fileID: 868861727}
   alertPanelUI: {fileID: 1891264789}
   alertText: {fileID: 1526392650}
 --- !u!1 &239628933
@@ -1333,7 +1334,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 868861727}
-        m_TargetAssemblyTypeName: LinearSearchSetup, Assembly-CSharp
+        m_TargetAssemblyTypeName: BinarySearchSetup, Assembly-CSharp
         m_MethodName: InvertPause
         m_Mode: 1
         m_Arguments:
@@ -2074,6 +2075,7 @@ Transform:
   m_Children:
   - {fileID: 1804975724}
   - {fileID: 1480912391}
+  - {fileID: 1895932844}
   - {fileID: 2100968407}
   - {fileID: 810466615}
   - {fileID: 868861726}
@@ -2246,7 +2248,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 186295690}
-        m_TargetAssemblyTypeName: LinearSearchMenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: BinarySearchMenuManager, Assembly-CSharp
         m_MethodName: goToOnPlayPanel
         m_Mode: 1
         m_Arguments:
@@ -2724,7 +2726,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456939035}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &810466616
 MonoBehaviour:
@@ -2751,7 +2753,7 @@ GameObject:
   - component: {fileID: 868861726}
   - component: {fileID: 868861727}
   m_Layer: 0
-  m_Name: LinearSearchSetup
+  m_Name: BinarySearchSetup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2769,7 +2771,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456939035}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &868861727
 MonoBehaviour:
@@ -2780,16 +2782,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 868861725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60994011d3496fe47bc8c37964134da3, type: 3}
+  m_Script: {fileID: 11500000, guid: 29706fcfe888ba94b9b3d00e27b7ec78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   arraysizeCustom: {fileID: 30809180}
   arrayValuesCustom: {fileID: 1224234691}
   arrayKeyCustom: {fileID: 320319484}
-  numOfElements: 15
+  numOfElements: 50
   element: {fileID: 740940779593125914, guid: dbec3a212bd8b87418ed7ba0eb0ddd4b, type: 3}
   elementsHolder: {fileID: 1480912390}
   tilesHolder: {fileID: 1804975723}
+  pointerHolder: {fileID: 1895932843}
   bartext: {fileID: 2044828554}
   algoSpeed: 0.5
   gridManager: {fileID: 2100968408}
@@ -4534,7 +4537,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 868861727}
-        m_TargetAssemblyTypeName: LinearSearchSetup, Assembly-CSharp
+        m_TargetAssemblyTypeName: BinarySearchSetup, Assembly-CSharp
         m_MethodName: setAlgoSpeed
         m_Mode: 0
         m_Arguments:
@@ -4964,6 +4967,7 @@ GameObject:
   - component: {fileID: 1742855035}
   - component: {fileID: 1742855038}
   - component: {fileID: 1742855037}
+  - component: {fileID: 1742855036}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4993,6 +4997,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1742855036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742855034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcc9dd442b112e41bec0a6ecdba7adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmproadName: {fileID: 0}
+  tmproadDescription: {fileID: 0}
+  tmproadAlgorithm: {fileID: 0}
+  tmproadTimeComplexity: {fileID: 0}
+  tmproadSpaceComplexity: {fileID: 0}
+  tmproadCppProgram: {fileID: 0}
+  nextSceneButton: {fileID: 0}
 --- !u!114 &1742855037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5413,7 +5436,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Linear Search Algorithm
+  m_text: Binary Search Algorithm
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50ff12c3792b17f4890ff969c531184d, type: 2}
   m_sharedMaterial: {fileID: 6660806498625106733, guid: 50ff12c3792b17f4890ff969c531184d, type: 2}
@@ -5686,6 +5709,36 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1895932843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1895932844}
+  m_Layer: 0
+  m_Name: PointerHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1895932844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895932843}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 456939035}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1898409046
 GameObject:
   m_ObjectHideFlags: 0
@@ -6253,7 +6306,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 186295690}
-        m_TargetAssemblyTypeName: LinearSearchMenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: BinarySearchMenuManager, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -6520,7 +6573,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 868861727}
-        m_TargetAssemblyTypeName: LinearSearchSetup, Assembly-CSharp
+        m_TargetAssemblyTypeName: BinarySearchSetup, Assembly-CSharp
         m_MethodName: PlayAlgorithm
         m_Mode: 1
         m_Arguments:
@@ -6598,7 +6651,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456939035}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2100968408
 MonoBehaviour:

@@ -11,6 +11,13 @@ public class NavController : MonoBehaviour
 
     [SerializeField] ThirdPersonCharacter character;
 
+    [SerializeField] Transform PickObjectTransfomLeft;
+    [SerializeField] Transform PickObjectTransfomRight;
+
+    public bool isholdingLeft = false;
+    public bool isholdingRight = false;
+  
+
     void Start() {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -45,10 +52,48 @@ public class NavController : MonoBehaviour
         float degreesPerSecond = 90 * Time.deltaTime * speed;
         Vector3 direction = pos - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        while(transform.rotation != targetRotation){
+        // (agent.transform.position - pos).magnitude < 0.1;
+        while(Quaternion.Angle(transform.rotation, targetRotation) > 0.1f){
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, degreesPerSecond);
             yield return null;
         }
+        transform.rotation = targetRotation;
 
+    }
+
+    public void PickObject(Transform gameObjectTransform, string hand){
+        gameObjectTransform.GetComponent<BoxCollider>().enabled = false;
+        gameObjectTransform.GetComponent<NavMeshObstacle>().enabled = false;
+        if(hand == "left")
+        {
+            gameObjectTransform.parent = PickObjectTransfomLeft;
+            isholdingLeft = true;
+        }
+        else if(hand == "right"){
+            gameObjectTransform.parent = PickObjectTransfomRight;
+            isholdingRight = true;
+        }
+        gameObjectTransform.localPosition = Vector3.zero;
+        gameObjectTransform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+        gameObjectTransform.localRotation = Quaternion.identity;
+    }
+
+    public void DropObject(Vector3 location, Transform parent, string hand){
+        Transform objectTransform = null;
+        if(hand == "left")
+        {
+            objectTransform = PickObjectTransfomLeft.GetChild(0);
+            isholdingLeft = false;
+        }
+        else if(hand == "right"){
+            objectTransform = PickObjectTransfomRight.GetChild(0);
+            isholdingRight = false;
+        }
+        objectTransform.parent = parent;
+        objectTransform.localPosition = location;
+        objectTransform.localScale = Vector3.one;
+        objectTransform.localRotation = Quaternion.identity;
+        objectTransform.GetComponent<BoxCollider>().enabled = true;
+        objectTransform.GetComponent<NavMeshObstacle>().enabled = true;
     }
 }

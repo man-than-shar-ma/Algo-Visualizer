@@ -242,7 +242,7 @@ public class LinearSearchSetup : MonoBehaviour
                 elementObjectArray[index].GetComponent<Element>().setRedMaterial();
 
                 //Droping the box down
-                StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown(algoSpeed1to10));
+                yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown(algoSpeed1to10));
 
                 yield return delay4;
                 yield return new WaitUntil(() => pause == false);
