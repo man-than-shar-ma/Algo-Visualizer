@@ -16,18 +16,10 @@ public class LinearSearchMenuManager : MonoBehaviour
     [SerializeField]
     LinearSearchSetup linearSearchSetup;
 
-    public GameObject alertPanelUI;
-    public TextMeshProUGUI alertText;
-
-    Animator anim;
+    public AlertPanelUI alertPanelUI;
 
     public void goToMainMenu(){
         SceneManager.LoadScene("MainUI");
-    }
-
-    void Start(){
-        anim = alertPanelUI.GetComponent<Animator>();
-        anim.keepAnimatorControllerStateOnDisable = false;
     }
 
     public void goToOnPlayPanel(){
@@ -67,35 +59,13 @@ public class LinearSearchMenuManager : MonoBehaviour
             isErrorFree = true;
         }
         catch(Exception e){
-            StartCoroutine(alertAnim(anim, "alert", alertPanelUI, e));
+            StartCoroutine(alertPanelUI.alertAnim("alert", e));
         }
 
         if(isErrorFree){
             customizePanel.SetActive(false);
             onPlayPanel.SetActive(true);
             linearSearchSetup.StartLinearSearchSetup();
-        }
-
-    }
-
-    IEnumerator alertAnim(Animator anim, string statename, GameObject alertPanelUI, Exception e){
-            alertPanelUI.SetActive(true);
-            alertText.SetText(e.Message);
-        do{
-            yield return null;
-        }
-        while(isAnimationPlaying(anim, statename));
-            alertPanelUI.SetActive(false);
-    }
-
-    
-    bool isAnimationPlaying(Animator anim, string statename){
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName(statename) &&
-        anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f){
-            return true;
-        }
-        else{
-            return false;
         }
     }
 }
