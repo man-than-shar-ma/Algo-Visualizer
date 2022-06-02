@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class LinearSearchData : MonoBehaviour
+public class LinearSearchData
 {
     public string arraySize;
     public string arrayValues;

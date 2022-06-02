@@ -18,6 +18,12 @@ public class MenuManager : MonoBehaviour
     // public void playscene(){
     //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     // }
+
+    void Start(){
+        mainMenuPanel.SetActive(true);
+        algorithmsPanel.SetActive(false);
+        optionsPanel.SetActive(true);
+    }
     
     public void quit(){
         //function for quitting the application
