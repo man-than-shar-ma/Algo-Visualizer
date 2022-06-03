@@ -13,6 +13,8 @@ public class LinearSearchSetup : MonoBehaviour
 
     [SerializeField] public TMP_InputField arrayKeyCustom;
 
+    [SerializeField] public TMP_InputField xxx;
+
     [SerializeField] private int numOfElements;
 
     [SerializeField] private Element element;

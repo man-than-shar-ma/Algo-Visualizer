@@ -23,8 +23,21 @@ public class LinearSearchMenuManager : MonoBehaviour
     }
 
     public void callLoadLinearSearchData(){
-        LinearSearchData linearSearchData = JSONHandler.loadLinearSearchData();
-        Debug.Log(linearSearchData);
+        string xxxText = linearSearchSetup.xxx.text;
+        if(xxxText.Length != 0){
+            LinearSearchData linearSearchData = JSONHandler.loadLinearSearchData(xxxText);
+            if(linearSearchData != null){
+                linearSearchSetup.arraysizeCustom.text = linearSearchData.arraySize;
+                linearSearchSetup.arrayValuesCustom.text = linearSearchData.arrayValues;
+                linearSearchSetup.arrayKeyCustom.text = linearSearchData.keyValue;
+            }
+            else{
+                StartCoroutine(alertPanelUI.alertAnim("alert", $"File Not Found : {JSONHandler.directoryPath}LinearSearchData{xxxText}.json"));
+            }
+        }
+        else{
+            StartCoroutine(alertPanelUI.alertAnim("alert", $"Please enter the JSON file number you want to load"));
+        }
     }
 
     public void goToOnPlayPanel(){

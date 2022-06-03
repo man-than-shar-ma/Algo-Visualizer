@@ -7,7 +7,7 @@ using System;
 public static class JSONHandler
 {
 
-    static string directoryPath = Application.persistentDataPath + "/AlgorithmsData/";
+    public static string directoryPath = Application.persistentDataPath + "/AlgorithmsData/";
 
     public static string makeSampleJSON(){
         if(!Directory.Exists(directoryPath)){
@@ -41,11 +41,14 @@ public static class JSONHandler
         return "Address copied to clipboard";
     }
 
-    public static LinearSearchData loadLinearSearchData(){
-        LinearSearchData linearSearchData = JsonUtility.FromJson<LinearSearchData>(directoryPath+"LinearSearchDataXXX.json");
+    public static LinearSearchData loadLinearSearchData(string xxx){
+        if(File.Exists(directoryPath+"LinearSearchData" + xxx + ".json")){
+            string data = File.ReadAllText(directoryPath+"LinearSearchData" + xxx + ".json");
+            LinearSearchData linearSearchData = JsonUtility.FromJson<LinearSearchData>(data);
+            
+            return linearSearchData;
+        }
 
-        return linearSearchData;
-
+        return null;
     }
-
 }
