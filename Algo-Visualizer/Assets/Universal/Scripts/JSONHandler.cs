@@ -51,4 +51,15 @@ public static class JSONHandler
 
         return null;
     }
+
+    public static BinarySearchData loadBinarySearchData(string xxx){
+        if(File.Exists(directoryPath+"BinarySearchData" + xxx + ".json")){
+            string data = File.ReadAllText(directoryPath+"BinarySearchData" + xxx + ".json");
+            BinarySearchData binarySearchData = JsonUtility.FromJson<BinarySearchData>(data);
+            
+            return binarySearchData;
+        }
+
+        return null;
+    }
 }
