@@ -22,6 +22,11 @@ public class LinearSearchMenuManager : MonoBehaviour
         SceneManager.LoadScene("MainUI");
     }
 
+    public void callLoadLinearSearchData(){
+        LinearSearchData linearSearchData = JSONHandler.loadLinearSearchData();
+        Debug.Log(linearSearchData);
+    }
+
     public void goToOnPlayPanel(){
 
         bool isErrorFree = false;
