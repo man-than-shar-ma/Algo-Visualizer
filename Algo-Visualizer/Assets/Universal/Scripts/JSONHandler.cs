@@ -26,20 +26,38 @@ public static class JSONHandler
         // GUIUtility.systemCopyBuffer = Application.persistentDataPath + "/AlgorithmsData/";
         // StartCoroutine(alertPanelUI.alertAnim("alert", $"Sample files created at : \n{Application.persistentDataPath}/AlgorithmsData/ \n\n\n Address copied to clipboard"));
     // }
+    static string directoryPath = Application.persistentDataPath + "/AlgorithmsData/";
+
     public static string makeSampleJSON(){
-        if(!Directory.Exists(Application.persistentDataPath + "/AlgorithmsData/")){
-            Directory.CreateDirectory(Application.persistentDataPath + "/AlgorithmsData/");
+        if(!Directory.Exists(directoryPath)){
+            Directory.CreateDirectory(directoryPath);
         }
 
+        ArrayList algoData = new ArrayList();
         //Linear Search Sample Data
-        LinearSearchData linearSearchData = new LinearSearchData();
-        linearSearchData.setSampleData();
-        string strOutput = JsonUtility.ToJson(linearSearchData, true);
-        File.WriteAllText(Application.persistentDataPath + "/AlgorithmsData/LinearSearchDataXXX.json", strOutput);
+        algoData.Add(new LinearSearchData());
 
-        GUIUtility.systemCopyBuffer = Application.persistentDataPath + "/AlgorithmsData/";
+        //Binary Search Sample Data
+        algoData.Add(new BinarySearchData());
+
         
-        return $"Sample files created at : \n{Application.persistentDataPath}/AlgorithmsData/ \n\n\n Address copied to clipboard";
+        for(int i = 0; i < algoData.Count; i++){
+            dynamic dynamicAlgo = algoData[i];
+            dynamicAlgo.setSampleData();
+            string strOutput = JsonUtility.ToJson(algoData[i], true);
+            File.WriteAllText(directoryPath + algoData[i].GetType() + "XXX.json", strOutput);
+        }
+
+        return $"Sample files created at : \n{directoryPath}";
+    }
+
+    public static string loadJSONAddress(){
+        if(!Directory.Exists(directoryPath)){
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        GUIUtility.systemCopyBuffer = directoryPath;
+        return "Address copied to clipboard";
     }
 
 }
