@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Binary Search/Scenes/BinarySearch.unity
     guid: 17bab1f478024fb4b938bad6d55c7ee1
+  - enabled: 1
+    path: Assets/Bubble Sort/Scenes/BubbleSort.unity
+    guid: f5985c933b585e94187d41e95926b836
   m_configObjects: {}

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using TMPro;
 
-public class BinarySearchMenuManager : MonoBehaviour
+public class BubbleSortMenuManager : MonoBehaviour
 {
     [SerializeField]
     GameObject customizePanel;
@@ -14,7 +14,7 @@ public class BinarySearchMenuManager : MonoBehaviour
     GameObject onPlayPanel;
 
     [SerializeField]
-    BinarySearchSetup binarySearchSetup;
+    BubbleSortSetup bubbleSortSetup;
 
     public AlertPanelUI alertPanelUI;
 
@@ -22,17 +22,16 @@ public class BinarySearchMenuManager : MonoBehaviour
         SceneManager.LoadScene("MainUI");
     }
 
-    public void callLoadBinarySearchData(){
-        string xxxText = binarySearchSetup.xxx.text;
+    public void callLoadBubbleSortData(){
+        string xxxText = bubbleSortSetup.xxx.text;
         if(xxxText.Length != 0){
-            BinarySearchData binarySearchData = JSONHandler.loadBinarySearchData(xxxText);
-            if(binarySearchData != null){
-                binarySearchSetup.arraysizeCustom.text = binarySearchData.arraySize;
-                binarySearchSetup.arrayValuesCustom.text = binarySearchData.arrayValues;
-                binarySearchSetup.arrayKeyCustom.text = binarySearchData.keyValue;
+            BubbleSortData bubbleSortData = JSONHandler.loadBubbleSortData(xxxText);
+            if(bubbleSortData != null){
+                bubbleSortSetup.arraysizeCustom.text = bubbleSortData.arraySize;
+                bubbleSortSetup.arrayValuesCustom.text = bubbleSortData.arrayValues;
             }
             else{
-                StartCoroutine(alertPanelUI.alertAnim("alert", $"File Not Found : {JSONHandler.directoryPath}BinarySearchData{xxxText}.json"));
+                StartCoroutine(alertPanelUI.alertAnim("alert", $"File Not Found : {JSONHandler.directoryPath}BubbleSortData{xxxText}.json"));
             }
         }
         else{
@@ -46,8 +45,8 @@ public class BinarySearchMenuManager : MonoBehaviour
         try{
             int arraySize = 0;
             //array size check
-            if(binarySearchSetup.arraysizeCustom.text.Length != 0){
-                arraySize = int.Parse(binarySearchSetup.arraysizeCustom.text);
+            if(bubbleSortSetup.arraysizeCustom.text.Length != 0){
+                arraySize = int.Parse(bubbleSortSetup.arraysizeCustom.text);
                 if(arraySize < 1 || arraySize > 100){
                     throw new Exception("Array Size must be between 1 and 100");
                 }
@@ -55,20 +54,14 @@ public class BinarySearchMenuManager : MonoBehaviour
             
             //array values check
             int[] arrayItemsInt;
-            if(binarySearchSetup.arrayValuesCustom.text.Trim().Length !=0){
-                string trimmedString = binarySearchSetup.arrayValuesCustom.text.Trim();
+            if(bubbleSortSetup.arrayValuesCustom.text.Trim().Length !=0){
+                string trimmedString = bubbleSortSetup.arrayValuesCustom.text.Trim();
                 string removedBrackets = trimmedString.Substring(1, trimmedString.Length-2);
                 string[] arrayStrings = removedBrackets.Split(',');
                 arrayItemsInt =  Array.ConvertAll<string, int>(arrayStrings, int.Parse);
                 if(arrayItemsInt.Length != arraySize){
                     throw new Exception("Array Size and Array Values length doesnt match");
                 }
-            }
-
-            //array key check
-            int arrayKey;
-            if(binarySearchSetup.arrayKeyCustom.text.Length != 0){
-                arrayKey = int.Parse(binarySearchSetup.arrayKeyCustom.text);
             }
 
             // Debug.Log(arrayItemsInt);
@@ -83,7 +76,7 @@ public class BinarySearchMenuManager : MonoBehaviour
         if(isErrorFree){
             customizePanel.SetActive(false);
             onPlayPanel.SetActive(true);
-            binarySearchSetup.StartBinarySearchSetup();
+            bubbleSortSetup.StartBubbleSortSetup();
         }
 
     }

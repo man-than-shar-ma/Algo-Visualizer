@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AlgorithmContentManager : MonoBehaviour
 {
     public Algorithm[] algorithm;
-    int numOfAlgorithms = 2;
+    int numOfAlgorithms;
 
     public GameObject algoPrefab;
     public GameObject algoContentHolder;
@@ -16,7 +16,8 @@ public class AlgorithmContentManager : MonoBehaviour
     string[] algoName = 
     {
         "Linear Search",
-        "Binary Search"
+        "Binary Search",
+        "Bubble Sort"
     };
 
     string[] algoDescription = 
@@ -30,7 +31,12 @@ If no match is found then -1 is returned.",
 It is efficient and also one of the most commonly used techniques that is used to solve problems.
 Binary search works only on a sorted set of elements, that means to use binary search on a collection, the collection must first be sorted.
 This searching technique follows the divide and conquer strategy. 
-The search space always reduces to half in every iteration."
+The search space always reduces to half in every iteration.",
+
+@"Bubble sort is a simple sorting algorithm. 
+This sorting algorithm is comparison-based algorithm in which each pair of adjacent elements is compared and the elements are swapped if they are not in order.
+It is called bubble sort because the movement of array elements is just like the movement of air bubbles in the water. 
+Similar to the bubbles in water that rise up to the surface, the array elements also move to the end in each iteration."
 
     };
     string[] algoAlgorithm = 
@@ -68,20 +74,33 @@ The search space always reduces to half in every iteration."
     Step 5: if pos = -1  
         print 'value is not present in the array'
         [end of if]  
-    Step 6: exit"
+    Step 6: exit",
 
+@"Step 1: First Iteration (Compare and Swap)
+    a. Starting from the first index, compare the first and the second elements.
+    b. If the first element is greater than the second element, they are swapped.
+    c. Now, compare the second and the third elements. Swap them if they are not in order.
+    d. The above process goes on until the last element.
+
+Step 2: Remaining Iteration
+    a. The same above process goes on for the remaining iterations.
+    b. After each iteration, the largest element among the unsorted elements is placed at the end.
+    c. In each iteration, the comparison takes place up to the last unsorted element.
+    d. The array is sorted when all the unsorted elements are placed at their correct positions."
     };
 
     string[] algoTimeComplexity = 
     {
-        "Best: O(1)\nAverage: O(n)\nWorst: O(n)",
-        "Best: O(1)\nAverage: O(logn)\nWorst: O(logn)"
+        "Best: \u03A9(1)\nAverage: \u0398(n)\nWorst: \u039F(n)",
+        "Best: \u03A9(1)\nAverage: \u0398(logn)\nWorst: \u039F(logn)",
+        "Best: \u03A9(n<sup>2</sup>)\nAverage: \u0398(n<sup>2</sup>)\nWorst: \u039F(n<sup>2</sup>)"
     };
 
     string[] algoSpaceComplexity = 
     {
-        "Worst: O(n)",
-        "Worst: O(n)"
+        "Worst: \u039F(1)",
+        "Worst: \u039F(1)",
+        "Worst: \u039F(1)"
     };
 
     string[] algoCppProgram = 
@@ -163,12 +182,55 @@ int main()
     }
     return 0;
 }
-"
+",
+@"#include <iostream>
+using namespace std;
+
+void bubbleSort(int array[], int size)
+{
+    for (int step = 0; step < size - 1; ++step)
+    {
+        for (int i = 0; i < size - step - 1; ++i)
+        {
+            if (array[i] > array[i + 1])
+            {
+                int temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
+            }
+        }
+    }
+}
+
+void printArray(int array[], int size)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        cout << ' ' << array[i];
+    }
+    cout << '\n';
+}
+
+int main()
+{
+    int data[] = {-23, 75, 10, 51, -13};
+    int size = sizeof(data) / sizeof(data[0]);
+    cout << 'Initial array : \n';
+    for (int i = 0; i < size; i++)
+    {
+        cout << ' ' << data[i];
+    }
+    bubbleSort(data, size);
+    cout << '\n\nSorted Array in Ascending Order:\n';
+    printArray(data, size);
+    return 0;
+}"
     };
 
     string[] nextSceneName = {
         "LinearSearch",
-        "BinarySearch"
+        "BinarySearch",
+        "BubbleSort"
     };
 
 
@@ -176,6 +238,7 @@ int main()
     // Start is called before the first frame update
     void Start()
     {
+        numOfAlgorithms = algoName.Length;
         algorithm = new Algorithm[numOfAlgorithms];
 
         for (int i=0; i<numOfAlgorithms;i++){

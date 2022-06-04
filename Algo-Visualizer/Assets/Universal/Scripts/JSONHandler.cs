@@ -21,6 +21,9 @@ public static class JSONHandler
         //Binary Search Sample Data
         algoData.Add(new BinarySearchData());
 
+        //Bubble Sort Sample Data
+        algoData.Add(new BubbleSortData());
+
         
         for(int i = 0; i < algoData.Count; i++){
             dynamic dynamicAlgo = algoData[i];
@@ -36,7 +39,6 @@ public static class JSONHandler
         if(!Directory.Exists(directoryPath)){
             Directory.CreateDirectory(directoryPath);
         }
-
         GUIUtility.systemCopyBuffer = directoryPath;
         return "Address copied to clipboard";
     }
@@ -45,10 +47,8 @@ public static class JSONHandler
         if(File.Exists(directoryPath+"LinearSearchData" + xxx + ".json")){
             string data = File.ReadAllText(directoryPath+"LinearSearchData" + xxx + ".json");
             LinearSearchData linearSearchData = JsonUtility.FromJson<LinearSearchData>(data);
-            
             return linearSearchData;
         }
-
         return null;
     }
 
@@ -56,10 +56,17 @@ public static class JSONHandler
         if(File.Exists(directoryPath+"BinarySearchData" + xxx + ".json")){
             string data = File.ReadAllText(directoryPath+"BinarySearchData" + xxx + ".json");
             BinarySearchData binarySearchData = JsonUtility.FromJson<BinarySearchData>(data);
-            
             return binarySearchData;
         }
+        return null;
+    }
 
+    public static BubbleSortData loadBubbleSortData(string xxx){
+        if(File.Exists(directoryPath+"BubbleSortData" + xxx + ".json")){
+            string data = File.ReadAllText(directoryPath+"BubbleSortData" + xxx + ".json");
+            BubbleSortData bubbleSortData = JsonUtility.FromJson<BubbleSortData>(data);
+            return bubbleSortData;
+        }
         return null;
     }
 }
