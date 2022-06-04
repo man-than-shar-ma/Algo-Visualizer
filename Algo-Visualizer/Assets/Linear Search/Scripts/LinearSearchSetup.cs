@@ -203,7 +203,7 @@ public class LinearSearchSetup : MonoBehaviour
         while(index<numOfElements){
             Vector3 pos = new Vector3(x++,y,z);
             
-            bartext.SetText($"Moving Agent to index {index}");
+            bartext.SetText($"Moving to index {index}");
 
             elementObjectArray[index].GetComponent<Element>().setYellowMaterial();
 
