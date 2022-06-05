@@ -33,6 +33,9 @@ public class SelectionSortSetup : MonoBehaviour
     private int[] elementArray;
     private Transform[] elementObjectArray;
 
+    private int[] originalElementArray;
+    private Transform[] originalElementObjectArray;
+
     float startposx = 2;
     float startposy = 1.5f;
     float startposz = 4;
@@ -115,6 +118,9 @@ public class SelectionSortSetup : MonoBehaviour
         // Vector3 originalPos = elementObjectArray[0].position;
         // agent.GetComponent<NavController>().PickObject(elementObjectArray[0], "right");
         // agent.GetComponent<NavController>().DropObject(originalPos, elementsHolder.transform);
+
+        originalElementArray = (int[]) elementArray.Clone();
+        originalElementObjectArray = (Transform[]) elementObjectArray.Clone();
     }
 
     void generateElements(){
@@ -144,6 +150,7 @@ public class SelectionSortSetup : MonoBehaviour
 
         var startObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
         startObject.name = $"Start";
+        startObject.tag = "Start";
         startObject.transform.parent = pointerHolder.transform;
         startObject.setElementValue("Start");
     }
@@ -166,6 +173,27 @@ public class SelectionSortSetup : MonoBehaviour
     public void PlayAlgorithm(){
         StopAllCoroutines();
         pause = false;
+
+        if(agent.GetComponent<NavController>().isholdingLeft){
+            GameObject gObj = agent.GetComponent<NavController>().returnHoldedGameObject("left");
+            if(gObj.CompareTag("Start")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, pointerHolder.transform, "left");
+            }
+            else if(gObj.CompareTag("Element")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, elementsHolder.transform, "left");
+            }
+        }
+
+        if(agent.GetComponent<NavController>().isholdingRight){
+            GameObject gObj = agent.GetComponent<NavController>().returnHoldedGameObject("right");
+            if(gObj.CompareTag("Start")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, pointerHolder.transform, "right");
+            }
+            else if(gObj.CompareTag("Element")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, elementsHolder.transform, "right");
+            }
+        }
+
         float x = startposx;
         float y = startposy;
         float z = startposz+1;
@@ -175,25 +203,23 @@ public class SelectionSortSetup : MonoBehaviour
             elementObjectArray[i].GetComponent<Element>().setDefaultMaterial();
             i++;
         }
+
         x = startposx;
         y = startposy;
         z = startposz-1;
 
-        if(agent.GetComponent<NavController>().isholdingRight)
-            agent.GetComponent<NavController>().DropObject(Vector3.zero, pointerHolder.transform, "right");
-
-        Transform endTrans = pointerHolder.transform.Find("End");
-        endTrans.position = new Vector3(x+numOfElements-1, y, z);
+        Transform endTrans = pointerHolder.transform.Find("Start");
+        endTrans.position = new Vector3(x, y, z);
         endTrans.GetComponent<Element>().setDefaultMaterial();
         
-        StartCoroutine(BubbleSort());
+        StartCoroutine(SelectionSort());
     }
 
     public void InvertPause(){
         pause = !pause;
     }
 
-    IEnumerator BubbleSort(){
+    IEnumerator SelectionSort(){
         // bartext.SetText($"Item to find : {key}");
         
         // yield return delay5;
@@ -203,10 +229,10 @@ public class SelectionSortSetup : MonoBehaviour
         float y = startposy;
         float z = startposz;
         
-        Transform endTrans = pointerHolder.transform.Find("End");
+        Transform startTrans = pointerHolder.transform.Find("Start");
 
-        int endPos = (int)endTrans.position.x;
-        int end = elementArray.Length - 1;
+        float startPos = startTrans.position.x;
+        int start = 0;
         
         int elementArrayLength = elementArray.Length;
         // Debug.Log("hi");
@@ -214,205 +240,221 @@ public class SelectionSortSetup : MonoBehaviour
         int step = 0;
         int i = 0;
         for(step = 0; step < elementArrayLength - 1; step++){
-            for(i = 0; i < elementArrayLength - step - 1; i++){
-                Vector3 pos1 = elementObjectArray[i].position;
-                Vector3 pos2 = elementObjectArray[i+1].position;
 
-                // Debug.Log("hi");
-                float midloc = (pos1.x + pos2.x) / 2;
-                Vector3 pos = new Vector3(midloc, y, z);
-                bartext.SetText($"Checking element at index {i} and {i+1}");
+            int minIndex = step;
+            float minPos = elementObjectArray[minIndex].position.x;
+
+            // moving to element at start pointer
+            Vector3 pos = new Vector3(elementObjectArray[minIndex].position.x, y, z);
+            bartext.SetText($"Setting element at Start index {step} as minimum");
+            elementObjectArray[minIndex].GetComponent<Element>().setYellowMaterial();
+            agent.GetComponent<NavController>().moveToVector3(pos);
+            yield return delay1;
+            yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
+
+            //looking at the box
+            Vector3 lookpos = elementObjectArray[minIndex].position;
+            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
+            yield return delay1;
+            yield return new WaitUntil(() => pause == false);
+
+            
+            //Lifting the box 1 up            
+            yield return StartCoroutine(elementObjectArray[minIndex].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
+            yield return delay2;
+            yield return new WaitUntil(() => pause == false);
+            
+            for(i = step + 1; i < elementArrayLength; i++){
+
+                //moving to index i
+                pos = new Vector3 (elementObjectArray[i].position.x, y, z);
+                bartext.SetText($"Checking element at index {i}");
                 elementObjectArray[i].GetComponent<Element>().setYellowMaterial();
-                elementObjectArray[i+1].GetComponent<Element>().setYellowMaterial();
                 agent.GetComponent<NavController>().moveToVector3(pos);
                 yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
                 yield return delay1;
 
-                Vector3 lookpos = Vector3.zero;
-
-                //looking at the box 1
-                lookpos = pos1;
+                //looking at the box i
+                lookpos = elementObjectArray[i].position;
                 yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
                 yield return delay1;
                 yield return new WaitUntil(() => pause == false);
 
-                //Lifting the box 1 up            
+                //Lifting the box i up            
                 yield return StartCoroutine(elementObjectArray[i].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
                 yield return delay2;
                 yield return new WaitUntil(() => pause == false);
 
-                //looking at the box 2
-                lookpos = pos2;
-                yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                yield return delay1;
-                yield return new WaitUntil(() => pause == false);
-
-                //Lifting the box 2 up            
-                yield return StartCoroutine(elementObjectArray[i+1].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-                yield return delay2;
-                yield return new WaitUntil(() => pause == false);
-
-                //looking between boxes
-                lookpos = Vector3.Lerp(pos1, pos2, 0.5f);
-                yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                yield return delay1;
-                yield return new WaitUntil(() => pause == false);
-
-                bartext.SetText($"is {elementArray[i]} > {elementArray[i+1]} ?");
+                //Finding min element between index i and minindex
+                bartext.SetText($"is {elementArray[i]} < {elementArray[minIndex]} ?");
                 yield return delay4;
                 yield return new WaitUntil(() => pause == false);
 
-                if(elementArray[i] > elementArray[i+1]){
-
+                if(elementArray[i] < elementArray[minIndex]){
                     bartext.SetText($"Yes");
                     yield return delay2;
                     yield return new WaitUntil(() => pause == false);
 
-                    bartext.SetText($"Swap {elementArray[i]} with {elementArray[i+1]}");
+                    bartext.SetText($"Setting element at index {i} as minimum");
                     yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 
-                    //looking at the box 1
-                    lookpos = pos1;
-                    yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-                    
-                    //picking box 1 in left hand
-                    agent.GetComponent<NavController>().PickObject(elementObjectArray[i], "left");
-                    yield return delay1;
+                    //droping old_min box down
+                    yield return StartCoroutine(elementObjectArray[minIndex].GetComponent<Element>().DropElementDown(algoSpeed1to10));
+                    elementObjectArray[minIndex].GetComponent<Element>().setDefaultMaterial();
+                    yield return delay2;
                     yield return new WaitUntil(() => pause == false);
 
-                    //looking at the box 2
-                    lookpos = pos2;
-                    yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //picking box 2 in right hand
-                    agent.GetComponent<NavController>().PickObject(elementObjectArray[i+1], "right");
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-
-                    //looking at the pos 1
-                    lookpos = pos1;
-                    yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //droping box from right hand
-                    agent.GetComponent<NavController>().DropObject(lookpos, pointerHolder.transform, "right");
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //looking at the pos 2
-                    lookpos = pos2;
-                    yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //droping box from left hand
-                    agent.GetComponent<NavController>().DropObject(lookpos, pointerHolder.transform, "left");
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    // for(int d=0;d<elementObjectArray.Length;d++){
-                    //     Debug.Log(elementObjectArray[d].name);
-                    // }
-                    
-                    // Debug.Log("--------------");
-                    Transform tempElementObject = elementObjectArray[i];
-                    elementObjectArray[i] = elementObjectArray[i+1];
-                    elementObjectArray[i+1] = tempElementObject;
-
-                    int tempElement = elementArray[i];
-                    elementArray[i] = elementArray[i+1];
-                    elementArray[i+1] = tempElement;
-
-                    // for(int d=0;d<elementObjectArray.Length;d++){
-                    //     Debug.Log(elementObjectArray[d].name);
-                    // }
-                    yield return new WaitUntil(() => pause == false);
-
+                    minIndex = i;  
+                    minPos = elementObjectArray[minIndex].position.x;
                 }
                 else{
-
                     bartext.SetText($"No");
                     yield return delay2;
                     yield return new WaitUntil(() => pause == false);
 
-                    //looking at the box 1
-                    lookpos = pos1;
-                    yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //Dropping box 1 down           
+                    //droping box at index i down
                     yield return StartCoroutine(elementObjectArray[i].GetComponent<Element>().DropElementDown(algoSpeed1to10));
+                    elementObjectArray[i].GetComponent<Element>().setDefaultMaterial();
                     yield return delay2;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //looking at the box 2
-                    lookpos = pos2;
-                    yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
-                    yield return delay1;
-                    yield return new WaitUntil(() => pause == false);
-
-                    //Dropping box 1 down           
-                    yield return StartCoroutine(elementObjectArray[i+1].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-                    yield return delay2;
-                    yield return new WaitUntil(() => pause == false);
+                    yield return new WaitUntil(() => pause == false);                    
                 }
-                elementObjectArray[i].GetComponent<Element>().setDefaultMaterial();
-                elementObjectArray[i+1].GetComponent<Element>().setDefaultMaterial();
             }
 
-            Vector3 epos = new Vector3(endPos, y, z);
-            bartext.SetText($"Decreasing End pointer by 1");
-            endTrans.GetComponent<Element>().setYellowMaterial();
-            agent.GetComponent<NavController>().moveToVector3(epos);
-            yield return new WaitUntil(() => (agent.transform.position - epos).magnitude < 0.1);
+            //swap min index and start
+            bartext.SetText($"Swap element {minIndex} with {step}");
+            yield return delay2;
+            yield return new WaitUntil(() => pause == false);
+
+            //moving to min index if its not at end
+            if(minIndex != elementArrayLength - 1){
+                //moving to min index
+                pos = new Vector3 (elementObjectArray[minIndex].position.x, y, z);
+                agent.GetComponent<NavController>().moveToVector3(pos);
+                yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
+                yield return delay1;
+
+                //looking at min index box
+                lookpos = elementObjectArray[minIndex].position;
+                yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+            }
+
+            //picking box at min index at left hand
+            agent.GetComponent<NavController>().PickObject(elementObjectArray[minIndex], "left");
+            yield return delay1;
+            yield return new WaitUntil(() => pause == false);
+
+            if(minIndex == step){
+                //droping box at step / start
+                pos = new Vector3(startPos, y, z+1);
+                agent.GetComponent<NavController>().DropObject(pos, elementsHolder.transform, "left");
+                elementObjectArray[minIndex].GetComponent<Element>().setDefaultMaterial();
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+            }
+            else{
+                //moving to step index
+                pos = new Vector3 (elementObjectArray[step].position.x, y, z);
+                elementObjectArray[step].GetComponent<Element>().setYellowMaterial();
+                agent.GetComponent<NavController>().moveToVector3(pos);
+                yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
+                yield return delay1;
+
+                //looking at the box step
+                lookpos = elementObjectArray[step].position;
+                yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+
+                //picking box step at right hand
+                agent.GetComponent<NavController>().PickObject(elementObjectArray[step], "right");
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+
+                //droping min element from left hand
+                pos = new Vector3(startPos, y, z+1);
+                agent.GetComponent<NavController>().DropObject(pos, elementsHolder.transform, "left");
+                elementObjectArray[minIndex].GetComponent<Element>().setDefaultMaterial();
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+
+                //moving to the empty position
+                pos = new Vector3 (minPos, y, z);
+                agent.GetComponent<NavController>().moveToVector3(pos);
+                yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
+                yield return delay1;
+
+                //look at the position
+                lookpos = new Vector3(minPos, y, z+1);
+                yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(lookpos, algoSpeed1to10));
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+
+                //droping box from right hand
+                pos = new Vector3(minPos, y, z+1);
+                agent.GetComponent<NavController>().DropObject(pos, elementsHolder.transform, "right");
+                elementObjectArray[step].GetComponent<Element>().setDefaultMaterial();
+                yield return delay1;
+                yield return new WaitUntil(() => pause == false);
+
+                Transform tempElementObject = elementObjectArray[step];
+                elementObjectArray[step] = elementObjectArray[minIndex];
+                elementObjectArray[minIndex] = tempElementObject;
+
+                int tempElement = elementArray[step];
+                elementArray[step] = elementArray[minIndex];
+                elementArray[minIndex] = tempElement;
+                yield return new WaitUntil(() => pause == false);
+            }
+
+
+            Vector3 spos = new Vector3(startPos, y, z);
+            bartext.SetText($"Increasing Start pointer by 1");
+            startTrans.GetComponent<Element>().setYellowMaterial();
+            agent.GetComponent<NavController>().moveToVector3(spos);
+            yield return new WaitUntil(() => (agent.transform.position - spos).magnitude < 0.1);
             yield return delay1;
 
             //looking at the box
-            Vector3 elookpos = endTrans.position;
-            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(elookpos, algoSpeed1to10));
+            Vector3 slookpos = startTrans.position;
+            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(slookpos, algoSpeed1to10));
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
-            //picking end pointer
-            agent.GetComponent<NavController>().PickObject(endTrans, "right");
+            //picking start pointer
+            agent.GetComponent<NavController>().PickObject(startTrans, "right");
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
-            endPos--;
+            startPos++;
             
-            StartCoroutine(colorRedBG(end--));
+            StartCoroutine(colorGreenBG(start++));
 
-            epos = new Vector3(endPos, y, z);
-            agent.GetComponent<NavController>().moveToVector3(epos);
-            yield return new WaitUntil(() => (agent.transform.position - epos).magnitude < 0.1);
+            spos = new Vector3(startPos, y, z);
+            agent.GetComponent<NavController>().moveToVector3(spos);
+            yield return new WaitUntil(() => (agent.transform.position - spos).magnitude < 0.1);
             yield return delay1;
 
             //looking at the drop location
-            elookpos = new Vector3(endPos, y, z-1);
-            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(elookpos, algoSpeed1to10));
+            slookpos = new Vector3(startPos, y, z-1);
+            yield return StartCoroutine(agent.GetComponent<NavController>().lookAtPoint(slookpos, algoSpeed1to10));
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
             //droping end pointer
-            agent.GetComponent<NavController>().DropObject(elookpos, pointerHolder.transform, "right");
+            agent.GetComponent<NavController>().DropObject(slookpos, pointerHolder.transform, "right");
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
-            endTrans.GetComponent<Element>().setDefaultMaterial();
+            startTrans.GetComponent<Element>().setDefaultMaterial();
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
         }
 
-        StartCoroutine(colorRedBG(end--));
+        StartCoroutine(colorGreenBG(start++));
         bartext.SetText($"Array Completely Sorted");
         yield return delay1;
         yield return new WaitUntil(() => pause == false);
@@ -435,7 +477,7 @@ public class SelectionSortSetup : MonoBehaviour
         agent.speed = algoSpeed1to10;
     }
 
-    IEnumerator colorRedBG(int index){
+    IEnumerator colorGreenBG(int index){
         elementObjectArray[index].GetComponent<Element>().setGreenMaterial();
         yield return null;
     }

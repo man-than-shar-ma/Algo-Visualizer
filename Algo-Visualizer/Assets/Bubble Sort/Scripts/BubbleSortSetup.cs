@@ -233,7 +233,7 @@ public class BubbleSortSetup : MonoBehaviour
         
         Transform endTrans = pointerHolder.transform.Find("End");
 
-        int endPos = (int)endTrans.position.x;
+        float endPos = endTrans.position.x;
         int end = elementArray.Length - 1;
         
         int elementArrayLength = elementArray.Length;
@@ -416,7 +416,7 @@ public class BubbleSortSetup : MonoBehaviour
 
             endPos--;
             
-            StartCoroutine(colorRedBG(end--));
+            StartCoroutine(colorGreenBG(end--));
 
             epos = new Vector3(endPos, y, z);
             agent.GetComponent<NavController>().moveToVector3(epos);
@@ -440,7 +440,7 @@ public class BubbleSortSetup : MonoBehaviour
 
         }
 
-        StartCoroutine(colorRedBG(end--));
+        StartCoroutine(colorGreenBG(end--));
         bartext.SetText($"Array Completely Sorted");
         yield return delay1;
         yield return new WaitUntil(() => pause == false);
@@ -463,7 +463,7 @@ public class BubbleSortSetup : MonoBehaviour
         agent.speed = algoSpeed1to10;
     }
 
-    IEnumerator colorRedBG(int index){
+    IEnumerator colorGreenBG(int index){
         elementObjectArray[index].GetComponent<Element>().setGreenMaterial();
         yield return null;
     }

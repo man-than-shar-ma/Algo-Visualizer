@@ -1663,8 +1663,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BubbleSortSetup, Assembly-CSharp
+      - m_Target: {fileID: 868861727}
+        m_TargetAssemblyTypeName: SelectionSortSetup, Assembly-CSharp
         m_MethodName: InvertPause
         m_Mode: 1
         m_Arguments:
@@ -3241,7 +3241,7 @@ GameObject:
   - component: {fileID: 868861726}
   - component: {fileID: 868861727}
   m_Layer: 0
-  m_Name: BubbleSortSetup
+  m_Name: SelectionSortSetup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3710,7 +3710,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 371923267}
   m_HandleRect: {fileID: 371923266}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4937,8 +4937,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BubbleSortSetup, Assembly-CSharp
+      - m_Target: {fileID: 868861727}
+        m_TargetAssemblyTypeName: SelectionSortSetup, Assembly-CSharp
         m_MethodName: setAlgoSpeed
         m_Mode: 0
         m_Arguments:
@@ -6828,8 +6828,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BubbleSortMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 186295690}
+        m_TargetAssemblyTypeName: SelectionSortMenuManager, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -7095,8 +7095,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BubbleSortSetup, Assembly-CSharp
+      - m_Target: {fileID: 868861727}
+        m_TargetAssemblyTypeName: SelectionSortSetup, Assembly-CSharp
         m_MethodName: PlayAlgorithm
         m_Mode: 1
         m_Arguments:
