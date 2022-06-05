@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Bubble Sort/Scenes/BubbleSort.unity
     guid: f5985c933b585e94187d41e95926b836
+  - enabled: 1
+    path: Assets/Selection Sort/Scenes/SelectionSort.unity
+    guid: 5f70b99361210d143bada3b7ff9ce526
   m_configObjects: {}
