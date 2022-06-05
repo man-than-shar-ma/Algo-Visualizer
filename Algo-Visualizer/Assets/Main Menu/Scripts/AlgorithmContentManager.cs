@@ -328,7 +328,7 @@ void insertionSort(int array[], int size)
     {
         int key = array[step];
         int j = step - 1;
-        while (key < array[j] && j >= 0)
+        while (j >= 0 && key < array[j])
         {
             array[j + 1] = array[j];
             --j;

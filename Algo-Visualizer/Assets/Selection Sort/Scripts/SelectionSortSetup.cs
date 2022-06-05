@@ -443,7 +443,7 @@ public class SelectionSortSetup : MonoBehaviour
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
-            //droping end pointer
+            //droping start pointer
             agent.GetComponent<NavController>().DropObject(slookpos, pointerHolder.transform, "right");
             yield return delay1;
             yield return new WaitUntil(() => pause == false);
