@@ -24,6 +24,9 @@ public static class JSONHandler
         //Bubble Sort Sample Data
         algoData.Add(new BubbleSortData());
 
+        //Selection Sort Sample Data
+        algoData.Add(new SelectionSortData());
+
         
         for(int i = 0; i < algoData.Count; i++){
             dynamic dynamicAlgo = algoData[i];
@@ -66,6 +69,15 @@ public static class JSONHandler
             string data = File.ReadAllText(directoryPath+"BubbleSortData" + xxx + ".json");
             BubbleSortData bubbleSortData = JsonUtility.FromJson<BubbleSortData>(data);
             return bubbleSortData;
+        }
+        return null;
+    }
+
+    public static SelectionSortData loadSelectionSortData(string xxx){
+        if(File.Exists(directoryPath+"SelectionSortData" + xxx + ".json")){
+            string data = File.ReadAllText(directoryPath+"SelectionSortData" + xxx + ".json");
+            SelectionSortData selectionSortData = JsonUtility.FromJson<SelectionSortData>(data);
+            return selectionSortData;
         }
         return null;
     }

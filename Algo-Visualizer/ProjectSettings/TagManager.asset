@@ -7,6 +7,11 @@ TagManager:
   - GameMusic
   - Button
   - ButtonSounds
+  - Element
+  - End
+  - Start
+  - Left
+  - Right
   layers:
   - Default
   - TransparentFX

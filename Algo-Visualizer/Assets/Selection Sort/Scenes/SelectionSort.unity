@@ -817,8 +817,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 186295691}
-        m_TargetAssemblyTypeName: BubbleSortMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 186295690}
+        m_TargetAssemblyTypeName: SelectionSortMenuManager, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -1072,7 +1072,7 @@ GameObject:
   - component: {fileID: 186295688}
   - component: {fileID: 186295687}
   - component: {fileID: 186295686}
-  - component: {fileID: 186295691}
+  - component: {fileID: 186295690}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1163,7 +1163,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &186295691
+--- !u!114 &186295690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1172,12 +1172,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 186295685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f079f77a88de6fb45904c21931ac56b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c954e2aed5c3ac4abed13d1cf7b990f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   customizePanel: {fileID: 1910176304}
   onPlayPanel: {fileID: 75237683}
-  bubbleSortSetup: {fileID: 868861727}
+  selectionSortSetup: {fileID: 868861727}
   alertPanelUI: {fileID: 114693567319933505}
 --- !u!1 &194911394
 GameObject:
@@ -1396,9 +1396,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 186295691}
-        m_TargetAssemblyTypeName: BubbleSortMenuManager, Assembly-CSharp
-        m_MethodName: callLoadBubbleSortData
+      - m_Target: {fileID: 186295690}
+        m_TargetAssemblyTypeName: SelectionSortMenuManager, Assembly-CSharp
+        m_MethodName: callLoadSelectionSortData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1663,7 +1663,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 868861727}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BubbleSortSetup, Assembly-CSharp
         m_MethodName: InvertPause
         m_Mode: 1
@@ -2580,8 +2580,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 186295691}
-        m_TargetAssemblyTypeName: BubbleSortMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 186295690}
+        m_TargetAssemblyTypeName: SelectionSortMenuManager, Assembly-CSharp
         m_MethodName: goToOnPlayPanel
         m_Mode: 1
         m_Arguments:
@@ -3270,7 +3270,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 868861725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a8d363ee8202b4080a84e6f3a3b4bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 299c78b84a1412844ad359f199eed9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   arraysizeCustom: {fileID: 30809180}
@@ -4299,7 +4299,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BubbleSortData
+  m_text: SelectionSortData
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fd18f32a64385874fa253d50404c332c, type: 2}
   m_sharedMaterial: {fileID: 5245661890910947559, guid: fd18f32a64385874fa253d50404c332c, type: 2}
@@ -4937,7 +4937,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 868861727}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BubbleSortSetup, Assembly-CSharp
         m_MethodName: setAlgoSpeed
         m_Mode: 0
@@ -6828,7 +6828,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 186295691}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BubbleSortMenuManager, Assembly-CSharp
         m_MethodName: goToMainMenu
         m_Mode: 1
@@ -7095,7 +7095,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 868861727}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BubbleSortSetup, Assembly-CSharp
         m_MethodName: PlayAlgorithm
         m_Mode: 1

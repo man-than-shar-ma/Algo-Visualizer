@@ -14,7 +14,7 @@ public class SelectionSortMenuManager : MonoBehaviour
     GameObject onPlayPanel;
 
     [SerializeField]
-    BubbleSortSetup bubbleSortSetup;
+    SelectionSortSetup selectionSortSetup;
 
     public AlertPanelUI alertPanelUI;
 
@@ -22,16 +22,16 @@ public class SelectionSortMenuManager : MonoBehaviour
         SceneManager.LoadScene("MainUI");
     }
 
-    public void callLoadBubbleSortData(){
-        string xxxText = bubbleSortSetup.xxx.text;
+    public void callLoadSelectionSortData(){
+        string xxxText = selectionSortSetup.xxx.text;
         if(xxxText.Length != 0){
-            BubbleSortData bubbleSortData = JSONHandler.loadBubbleSortData(xxxText);
-            if(bubbleSortData != null){
-                bubbleSortSetup.arraysizeCustom.text = bubbleSortData.arraySize;
-                bubbleSortSetup.arrayValuesCustom.text = bubbleSortData.arrayValues;
+            SelectionSortData selectionSortData = JSONHandler.loadSelectionSortData(xxxText);
+            if(selectionSortData != null){
+                selectionSortSetup.arraysizeCustom.text = selectionSortData.arraySize;
+                selectionSortSetup.arrayValuesCustom.text = selectionSortData.arrayValues;
             }
             else{
-                StartCoroutine(alertPanelUI.alertAnim("alert", $"File Not Found : {JSONHandler.directoryPath}BubbleSortData{xxxText}.json"));
+                StartCoroutine(alertPanelUI.alertAnim("alert", $"File Not Found : {JSONHandler.directoryPath}SelectionSortData{xxxText}.json"));
             }
         }
         else{
@@ -45,8 +45,8 @@ public class SelectionSortMenuManager : MonoBehaviour
         try{
             int arraySize = 0;
             //array size check
-            if(bubbleSortSetup.arraysizeCustom.text.Length != 0){
-                arraySize = int.Parse(bubbleSortSetup.arraysizeCustom.text);
+            if(selectionSortSetup.arraysizeCustom.text.Length != 0){
+                arraySize = int.Parse(selectionSortSetup.arraysizeCustom.text);
                 if(arraySize < 1 || arraySize > 100){
                     throw new Exception("Array Size must be between 1 and 100");
                 }
@@ -54,8 +54,8 @@ public class SelectionSortMenuManager : MonoBehaviour
             
             //array values check
             int[] arrayItemsInt;
-            if(bubbleSortSetup.arrayValuesCustom.text.Trim().Length !=0){
-                string trimmedString = bubbleSortSetup.arrayValuesCustom.text.Trim();
+            if(selectionSortSetup.arrayValuesCustom.text.Trim().Length !=0){
+                string trimmedString = selectionSortSetup.arrayValuesCustom.text.Trim();
                 string removedBrackets = trimmedString.Substring(1, trimmedString.Length-2);
                 string[] arrayStrings = removedBrackets.Split(',');
                 arrayItemsInt =  Array.ConvertAll<string, int>(arrayStrings, int.Parse);
@@ -76,7 +76,7 @@ public class SelectionSortMenuManager : MonoBehaviour
         if(isErrorFree){
             customizePanel.SetActive(false);
             onPlayPanel.SetActive(true);
-            bubbleSortSetup.StartBubbleSortSetup();
+            selectionSortSetup.StartSelectionSortSetup();
         }
 
     }

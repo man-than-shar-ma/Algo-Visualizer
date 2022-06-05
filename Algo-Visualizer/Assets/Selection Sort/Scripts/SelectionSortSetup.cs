@@ -55,7 +55,7 @@ public class SelectionSortSetup : MonoBehaviour
 
 
     // Start is called before the first frame update
-    public void StartBubbleSortSetup()
+    public void StartSelectionSortSetup()
     {
         //checking whether the user has entered size or not
         if(arraysizeCustom.text.Length != 0){
@@ -74,7 +74,7 @@ public class SelectionSortSetup : MonoBehaviour
         delay30 = new WaitForSeconds(0.3f + (1 - algoSpeed) * 30);
 
 
-        bartext.SetText("Bubble Sort Algorithm");
+        bartext.SetText("Selection Sort Algorithm");
 
         gridManager._width = numOfElements;
         gridManager._height = 3 ;
@@ -138,14 +138,14 @@ public class SelectionSortSetup : MonoBehaviour
     }
 
     void generatePointers(){
-        float x = startposx+numOfElements-1;
+        float x = startposx;
         float y = startposy;
         float z = startposz-1;
 
-        var endObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
-        endObject.name = $"End";
-        endObject.transform.parent = pointerHolder.transform;
-        endObject.setElementValue("End");
+        var startObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
+        startObject.name = $"Start";
+        startObject.transform.parent = pointerHolder.transform;
+        startObject.setElementValue("Start");
     }
 
     void fillRandomData(int[] arr){

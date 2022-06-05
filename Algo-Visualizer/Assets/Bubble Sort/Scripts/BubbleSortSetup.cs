@@ -33,6 +33,9 @@ public class BubbleSortSetup : MonoBehaviour
     private int[] elementArray;
     private Transform[] elementObjectArray;
 
+    private int[] originalElementArray;
+    private Transform[] originalElementObjectArray;
+
     float startposx = 2;
     float startposy = 1.5f;
     float startposz = 4;
@@ -115,6 +118,9 @@ public class BubbleSortSetup : MonoBehaviour
         // Vector3 originalPos = elementObjectArray[0].position;
         // agent.GetComponent<NavController>().PickObject(elementObjectArray[0], "right");
         // agent.GetComponent<NavController>().DropObject(originalPos, elementsHolder.transform);
+
+        originalElementArray = (int[]) elementArray.Clone();
+        originalElementObjectArray = (Transform[]) elementObjectArray.Clone();
     }
 
     void generateElements(){
@@ -144,6 +150,7 @@ public class BubbleSortSetup : MonoBehaviour
 
         var endObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
         endObject.name = $"End";
+        endObject.tag = "End";
         endObject.transform.parent = pointerHolder.transform;
         endObject.setElementValue("End");
     }
@@ -166,6 +173,30 @@ public class BubbleSortSetup : MonoBehaviour
     public void PlayAlgorithm(){
         StopAllCoroutines();
         pause = false;
+
+        if(agent.GetComponent<NavController>().isholdingLeft){
+            GameObject gObj = agent.GetComponent<NavController>().returnHoldedGameObject("left");
+            if(gObj.CompareTag("End")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, pointerHolder.transform, "left");
+            }
+            else if(gObj.CompareTag("Element")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, elementsHolder.transform, "left");
+            }
+        }
+
+        if(agent.GetComponent<NavController>().isholdingRight){
+            GameObject gObj = agent.GetComponent<NavController>().returnHoldedGameObject("right");
+            if(gObj.CompareTag("End")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, pointerHolder.transform, "right");
+            }
+            else if(gObj.CompareTag("Element")){
+                agent.GetComponent<NavController>().DropObject(Vector3.zero, elementsHolder.transform, "right");
+            }
+        }
+        
+        elementArray = (int[])originalElementArray.Clone();
+        elementObjectArray = (Transform[])originalElementObjectArray.Clone();
+
         float x = startposx;
         float y = startposy;
         float z = startposz+1;
@@ -177,10 +208,7 @@ public class BubbleSortSetup : MonoBehaviour
         }
         x = startposx;
         y = startposy;
-        z = startposz-1;
-
-        if(agent.GetComponent<NavController>().isholdingRight)
-            agent.GetComponent<NavController>().DropObject(Vector3.zero, pointerHolder.transform, "right");
+        z = startposz-1;            
 
         Transform endTrans = pointerHolder.transform.Find("End");
         endTrans.position = new Vector3(x+numOfElements-1, y, z);
@@ -302,7 +330,7 @@ public class BubbleSortSetup : MonoBehaviour
                     yield return new WaitUntil(() => pause == false);
 
                     //droping box from right hand
-                    agent.GetComponent<NavController>().DropObject(lookpos, pointerHolder.transform, "right");
+                    agent.GetComponent<NavController>().DropObject(lookpos, elementsHolder.transform, "right");
                     yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 
@@ -313,7 +341,7 @@ public class BubbleSortSetup : MonoBehaviour
                     yield return new WaitUntil(() => pause == false);
 
                     //droping box from left hand
-                    agent.GetComponent<NavController>().DropObject(lookpos, pointerHolder.transform, "left");
+                    agent.GetComponent<NavController>().DropObject(lookpos, elementsHolder.transform, "left");
                     yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 

@@ -48,7 +48,8 @@ public class NavController : MonoBehaviour
         transform.GetComponent<NavMeshAgent>().SetDestination(pos);
     }
 
-    public IEnumerator lookAtPoint(Vector3 pos, float speed = 1f){
+    public IEnumerator lookAtPoint(Vector3 orgPos, float speed = 1f){
+        Vector3 pos = new Vector3(orgPos.x, transform.position.y, orgPos.z);
         float degreesPerSecond = 90 * Time.deltaTime * speed;
         Vector3 direction = pos - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -95,5 +96,13 @@ public class NavController : MonoBehaviour
         objectTransform.localRotation = Quaternion.identity;
         objectTransform.GetComponent<BoxCollider>().enabled = true;
         objectTransform.GetComponent<NavMeshObstacle>().enabled = true;
+    }
+
+    public GameObject returnHoldedGameObject(string hand){
+        if(hand == "left")
+            return PickObjectTransfomLeft.GetChild(0).gameObject;
+        else if(hand == "right")
+            return PickObjectTransfomRight.GetChild(0).gameObject;
+        return null;
     }
 }
