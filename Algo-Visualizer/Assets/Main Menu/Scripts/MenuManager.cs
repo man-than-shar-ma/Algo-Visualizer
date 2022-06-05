@@ -20,9 +20,11 @@ public class MenuManager : MonoBehaviour
     // }
 
     void Start(){
-        mainMenuPanel.SetActive(true);
         algorithmsPanel.SetActive(false);
+        
         optionsPanel.SetActive(true);
+
+        mainMenuPanel.SetActive(true);
     }
     
     public void quit(){

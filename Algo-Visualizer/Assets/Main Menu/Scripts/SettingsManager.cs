@@ -56,9 +56,11 @@ public class SettingsManager : MonoBehaviour
         resolutionDropdown.value = resIndex;
         setResolution(resIndex);
 
-        gameObject.SetActive(false);
         gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0,0);
+        // Debug.Log("Hi");
+        gameObject.SetActive(false);
     }
+    
     public void setVolume(float sliderValue){
         audioMixer.SetFloat("volume", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("volumeSliderValue", sliderValue);
