@@ -18,7 +18,8 @@ public class AlgorithmContentManager : MonoBehaviour
         "Linear Search",
         "Binary Search",
         "Bubble Sort",
-        "Selection Sort"
+        "Selection Sort",
+        "Insertion Sort"
     };
 
     string[] algoDescription = 
@@ -40,7 +41,12 @@ It is called bubble sort because the movement of array elements is just like the
 Similar to the bubbles in water that rise up to the surface, the array elements also move to the end in each iteration.",
 
 @"In selection sort, the smallest value among the unsorted elements of the array is selected in every pass and places that element at the beginning of the unsorted list. 
-It is also the simplest algorithm and is divided into two parts, the sorted part at the left end and the unsorted part at the right end."
+It is also the simplest algorithm and is divided into two parts, the sorted part at the left end and the unsorted part at the right end.",
+
+@"Insertion sort is a sorting algorithm that places an unsorted element at its suitable place in each iteration.
+Insertion sort works similarly as we sort cards in our hand in a card game.
+We assume that the first card is already sorted then, we select an unsorted card. If the unsorted card is greater than the card in hand, it is placed on the right otherwise, to the left. In the same way, other unsorted cards are taken and put in their right place.
+A similar approach is used by insertion sort."
 
     };
     string[] algoAlgorithm = 
@@ -93,10 +99,23 @@ Step 2: Remaining Iteration
     d. The array is sorted when all the unsorted elements are placed at their correct positions.",
 
 @"Step 1: Set the first element as minimum.
+
 Step 2: Compare minimum with the second element. If the second element is smaller than minimum, assign the second element as minimum.
+
 Step 3: Compare minimum with the third element. Again, if the third element is smaller, then assign minimum to the third element otherwise do nothing. The process goes on until the last element.
+
 Step 4: After each iteration, minimum is placed in the front of the unsorted list.
-Step 5: For each iteration, indexing starts from the first unsorted element. Step 1 to 3 are repeated until all the elements are placed at their correct positions."
+
+Step 5: For each iteration, indexing starts from the first unsorted element. Step 1 to 3 are repeated until all the elements are placed at their correct positions.",
+
+@"Step 1: The first element in the array is assumed to be sorted. Take the second element and store it separately in key.
+Compare key with the first element. If the first element is greater than key, then key is placed in front of the first element.
+
+Step 2: Now, the first two elements are sorted.
+Take the third element and compare it with the elements on the left of it. Placed it just behind the element smaller than it. If there is no element smaller than it, then place it at the beginning of the array.
+
+Step 3: Similarly, place every unsorted element at its correct position.
+"
 
     };
 
@@ -105,11 +124,13 @@ Step 5: For each iteration, indexing starts from the first unsorted element. Ste
         "Best: \u03A9(1)\nAverage: \u0398(n)\nWorst: \u039F(n)",
         "Best: \u03A9(1)\nAverage: \u0398(logn)\nWorst: \u039F(logn)",
         "Best: \u03A9(n<sup>2</sup>)\nAverage: \u0398(n<sup>2</sup>)\nWorst: \u039F(n<sup>2</sup>)",
-        "Best: \u03A9(n<sup>2</sup>)\nAverage: \u0398(n<sup>2</sup>)\nWorst: \u039F(n<sup>2</sup>)"
+        "Best: \u03A9(n<sup>2</sup>)\nAverage: \u0398(n<sup>2</sup>)\nWorst: \u039F(n<sup>2</sup>)",
+        "Best: \u03A9(n)\nAverage: \u0398(n<sup>2</sup>)\nWorst: \u039F(n<sup>2</sup>)"
     };
 
     string[] algoSpaceComplexity = 
     {
+        "Worst: \u039F(1)",
         "Worst: \u039F(1)",
         "Worst: \u039F(1)",
         "Worst: \u039F(1)",
@@ -287,14 +308,58 @@ int main()
     cout << '\n\nSorted array in Acsending Order:\n';
     printArray(data, size);
     return 0;
-}"
+}",
+
+@"#include <iostream>
+using namespace std;
+
+void printArray(int array[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        cout << array[i] << ' ';
+    }
+    cout << endl;
+}
+
+void insertionSort(int array[], int size)
+{
+    for (int step = 1; step < size; step++)
+    {
+        int key = array[step];
+        int j = step - 1;
+        while (key < array[j] && j >= 0)
+        {
+            array[j + 1] = array[j];
+            --j;
+        }
+        array[j + 1] = key;
+    }
+}
+
+int main()
+{
+    int data[] = {19, 35, 14, 54, 35};
+    int size = sizeof(data) / sizeof(data[0]);
+    cout << 'Initial array : \n';
+    for (int i = 0; i < size; i++)
+    {
+        cout << data[i] << ' ';
+    }
+    insertionSort(data, size);
+    cout << '\n\nSorted array in ascending order:\n';
+    printArray(data, size);
+    return 0;
+}
+"
     };
 
     string[] nextSceneName = {
         "LinearSearch",
         "BinarySearch",
         "BubbleSort",
-        "SelectionSort"
+        "SelectionSort",
+        "InsertionSort"
     };
 
     // Start is called before the first frame update
