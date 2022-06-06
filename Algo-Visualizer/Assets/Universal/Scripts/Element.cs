@@ -16,8 +16,12 @@ public class Element : MonoBehaviour
     AudioSource boxRedSound;
     AudioSource boxYellowSound;
     AudioSource boxGreenSound;
+
+    AudioSource liftUpSound;
+    AudioSource liftDownSound;
     
     GameObject boxSoundsObj;
+    GameObject liftSoundsObj;
 
     [SerializeField] Canvas canvas;
     [SerializeField] private float boxoffset = 1;
@@ -32,6 +36,10 @@ public class Element : MonoBehaviour
         boxRedSound = boxSoundsObj.transform.GetChild(1).GetComponent<AudioSource>();
         boxYellowSound = boxSoundsObj.transform.GetChild(2).GetComponent<AudioSource>();
         boxGreenSound = boxSoundsObj.transform.GetChild(3).GetComponent<AudioSource>();
+
+        liftSoundsObj = GameObject.FindGameObjectWithTag("LiftUpDownSounds");
+        liftUpSound = liftSoundsObj.transform.GetChild(0).GetComponent<AudioSource>();
+        liftDownSound = liftSoundsObj.transform.GetChild(1).GetComponent<AudioSource>();
     }
 
     public void setElementValue(string text){
@@ -71,6 +79,7 @@ public class Element : MonoBehaviour
 
     public IEnumerator LiftElementUp(float speed = 1f){
         Vector3 newpos = new Vector3(transform.position.x, transform.position.y+boxoffset, transform.position.z);
+        liftUpSound.Play();
             while(transform.position.y < newpos.y){
                 transform.position = new Vector3(transform.position.x,transform.position.y+boxMoveSpeed*Time.deltaTime*speed, transform.position.z);
                 yield return null;
@@ -80,6 +89,7 @@ public class Element : MonoBehaviour
 
     public IEnumerator DropElementDown(float speed = 1f){
         Vector3 newpos = new Vector3(transform.position.x, transform.position.y-boxoffset, transform.position.z);
+        liftDownSound.Play();
             while(transform.position.y > newpos.y){
                 transform.position = new Vector3(transform.position.x,transform.position.y-boxMoveSpeed*Time.deltaTime*speed, transform.position.z);
                 yield return null;
