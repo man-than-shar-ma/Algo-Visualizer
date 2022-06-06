@@ -389,7 +389,7 @@ int main()
             // algorithm[i].GetComponent<Button>().onClick.AddListener(() => algorithm[i].setAlgoDetailedText(algoDetailed));
         }
 
-        Algorithm[] cSoon = new Algorithm[10];
+        Algorithm[] cSoon = new Algorithm[5];
         for(int i=0;i<cSoon.Length;i++){
             var algo = Instantiate(algoPrefab, Vector3.zero, Quaternion.identity);
             algo.name = "Coming Soon";

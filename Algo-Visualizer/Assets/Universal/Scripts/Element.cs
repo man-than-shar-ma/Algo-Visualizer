@@ -11,7 +11,13 @@ public class Element : MonoBehaviour
     [SerializeField] Material[] redMaterials;
     [SerializeField] Material[] yellowMaterials;
     [SerializeField] Material[] greenMaterials;
+
+    AudioSource boxDefaultSound;
+    AudioSource boxRedSound;
+    AudioSource boxYellowSound;
+    AudioSource boxGreenSound;
     
+    GameObject boxSoundsObj;
 
     [SerializeField] Canvas canvas;
     [SerializeField] private float boxoffset = 1;
@@ -21,6 +27,11 @@ public class Element : MonoBehaviour
 
     void Start() {
         cam = Camera.main;
+        boxSoundsObj = GameObject.FindGameObjectWithTag("BoxColorSounds");
+        boxDefaultSound = boxSoundsObj.transform.GetChild(0).GetComponent<AudioSource>();
+        boxRedSound = boxSoundsObj.transform.GetChild(1).GetComponent<AudioSource>();
+        boxYellowSound = boxSoundsObj.transform.GetChild(2).GetComponent<AudioSource>();
+        boxGreenSound = boxSoundsObj.transform.GetChild(3).GetComponent<AudioSource>();
     }
 
     public void setElementValue(string text){
@@ -30,21 +41,25 @@ public class Element : MonoBehaviour
     public void setDefaultMaterial(){
         MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
         elementMesh.materials = baseMaterials;
+        boxDefaultSound.Play();
     }
 
     public void setRedMaterial(){
         MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
         elementMesh.materials = redMaterials;
+        boxRedSound.Play();
     }
 
     public void setYellowMaterial(){
         MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
         elementMesh.materials = yellowMaterials;
+        boxYellowSound.Play();
     }
 
     public void setGreenMaterial(){
         MeshRenderer elementMesh = gameObject.GetComponent<MeshRenderer>();
         elementMesh.materials = greenMaterials;
+        boxGreenSound.Play();
     }
 
     void Update(){

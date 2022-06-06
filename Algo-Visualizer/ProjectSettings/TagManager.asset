@@ -12,6 +12,7 @@ TagManager:
   - Start
   - Left
   - Right
+  - BoxColorSounds
   layers:
   - Default
   - TransparentFX
