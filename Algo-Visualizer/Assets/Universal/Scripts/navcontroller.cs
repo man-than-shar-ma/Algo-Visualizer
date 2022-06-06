@@ -16,12 +16,20 @@ public class NavController : MonoBehaviour
 
     public bool isholdingLeft = false;
     public bool isholdingRight = false;
+
+    AudioSource pickBoxSound;
+    AudioSource dropBoxSound;
+    GameObject boxSoundsObj;
   
 
     void Start() {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
+
+        boxSoundsObj = GameObject.FindGameObjectWithTag("PickDropSounds");
+        pickBoxSound = boxSoundsObj.transform.GetChild(0).GetComponent<AudioSource>();
+        dropBoxSound = boxSoundsObj.transform.GetChild(1).GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -77,6 +85,7 @@ public class NavController : MonoBehaviour
         gameObjectTransform.localPosition = Vector3.zero;
         gameObjectTransform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
         gameObjectTransform.localRotation = Quaternion.identity;
+        pickBoxSound.Play();
     }
 
     public void DropObject(Vector3 location, Transform parent, string hand){
@@ -96,6 +105,7 @@ public class NavController : MonoBehaviour
         objectTransform.localRotation = Quaternion.identity;
         objectTransform.GetComponent<BoxCollider>().enabled = true;
         objectTransform.GetComponent<NavMeshObstacle>().enabled = true;
+        dropBoxSound.Play();
     }
 
     public GameObject returnHoldedGameObject(string hand){
