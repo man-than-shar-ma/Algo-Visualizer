@@ -316,7 +316,7 @@ public class InsertionSortSetup : MonoBehaviour
                 
                 //drop the j box in right hand at j+1 location
                 agent.GetComponent<NavController>().DropObject(jp1Pos, elementsHolder.transform, "right");
-                if(start>j+1)
+                if(start>j)
                     elementObjectArray[j].GetComponent<Element>().setGreenMaterial();
                 else
                     elementObjectArray[j].GetComponent<Element>().setDefaultMaterial();

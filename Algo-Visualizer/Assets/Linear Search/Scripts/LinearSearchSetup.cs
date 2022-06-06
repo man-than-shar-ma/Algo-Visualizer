@@ -241,11 +241,9 @@ public class LinearSearchSetup : MonoBehaviour
                 yield return delay2;
                 yield return new WaitUntil(() => pause == false);
                 bartext.SetText($"{key} not found at index {index}");
-                elementObjectArray[index].GetComponent<Element>().setRedMaterial();
-
                 //Droping the box down
                 yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-
+                elementObjectArray[index].GetComponent<Element>().setRedMaterial();
                 yield return delay4;
                 yield return new WaitUntil(() => pause == false);
                 index++;
