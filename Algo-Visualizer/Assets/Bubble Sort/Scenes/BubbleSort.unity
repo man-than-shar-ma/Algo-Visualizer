@@ -2336,7 +2336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 396.50003, y: 0}
+  m_AnchoredPosition: {x: 396.5, y: 0}
   m_SizeDelta: {x: 700, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &492961127
@@ -3277,7 +3277,8 @@ MonoBehaviour:
   arrayValuesCustom: {fileID: 1224234691}
   xxx: {fileID: 41240643}
   numOfElements: 15
-  element: {fileID: 740940779593125914, guid: dbec3a212bd8b87418ed7ba0eb0ddd4b, type: 3}
+  boxElement: {fileID: 740940779593125914, guid: dbec3a212bd8b87418ed7ba0eb0ddd4b, type: 3}
+  flagElement: {fileID: 3906635177544645969, guid: ab0cb91b0f9dbcd4e95ebebb85cbb175, type: 3}
   elementsHolder: {fileID: 1480912390}
   tilesHolder: {fileID: 1804975723}
   pointerHolder: {fileID: 1895932843}
@@ -4880,7 +4881,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 396.50003, y: 0}
+  m_AnchoredPosition: {x: 396.5, y: 0}
   m_SizeDelta: {x: 700, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1503324379
@@ -5524,7 +5525,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 396.50003, y: 0}
+  m_AnchoredPosition: {x: 396.5, y: 0}
   m_SizeDelta: {x: 700, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615655085

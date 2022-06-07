@@ -15,7 +15,8 @@ public class BubbleSortSetup : MonoBehaviour
 
     [SerializeField] private int numOfElements;
 
-    [SerializeField] private Element element;
+    [SerializeField] private Element boxElement;
+    [SerializeField] private Element flagElement;
 
     [SerializeField] private GameObject elementsHolder;
     [SerializeField] private GameObject tilesHolder;
@@ -132,7 +133,7 @@ public class BubbleSortSetup : MonoBehaviour
         int tnumOfElements = numOfElements;
         int i=0;
         while(tnumOfElements!=0){
-            var elementObject = Instantiate(element, new Vector3(x++,y,z), Quaternion.identity);
+            var elementObject = Instantiate(boxElement, new Vector3(x++,y,z), Quaternion.identity);
             elementObject.name = $"Element {totalElements - tnumOfElements}";
             elementObject.transform.parent = elementsHolder.transform;
             // elementObject.elementValueSet((totalElements - numOfElements).ToString());
@@ -148,7 +149,7 @@ public class BubbleSortSetup : MonoBehaviour
         float y = startposy;
         float z = startposz-1;
 
-        var endObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
+        var endObject = Instantiate(flagElement, new Vector3(x, y, z), Quaternion.identity);
         endObject.name = $"End";
         endObject.tag = "End";
         endObject.transform.parent = pointerHolder.transform;
@@ -266,7 +267,7 @@ public class BubbleSortSetup : MonoBehaviour
 
                 //Lifting the box 1 up            
                 yield return StartCoroutine(elementObjectArray[i].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-                yield return delay2;
+                yield return delay1;
                 yield return new WaitUntil(() => pause == false);
 
                 //looking at the box 2
@@ -277,7 +278,7 @@ public class BubbleSortSetup : MonoBehaviour
 
                 //Lifting the box 2 up            
                 yield return StartCoroutine(elementObjectArray[i+1].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-                yield return delay2;
+                yield return delay1;
                 yield return new WaitUntil(() => pause == false);
 
                 //looking between boxes
@@ -287,7 +288,7 @@ public class BubbleSortSetup : MonoBehaviour
                 yield return new WaitUntil(() => pause == false);
 
                 bartext.SetText($"is {elementArray[i]} > {elementArray[i+1]} ?");
-                yield return delay4;
+                yield return delay2;
                 yield return new WaitUntil(() => pause == false);
 
                 if(elementArray[i] > elementArray[i+1]){
@@ -378,7 +379,7 @@ public class BubbleSortSetup : MonoBehaviour
 
                     //Dropping box 1 down           
                     yield return StartCoroutine(elementObjectArray[i].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-                    yield return delay2;
+                    yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 
                     //looking at the box 2
@@ -389,7 +390,7 @@ public class BubbleSortSetup : MonoBehaviour
 
                     //Dropping box 1 down           
                     yield return StartCoroutine(elementObjectArray[i+1].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-                    yield return delay2;
+                    yield return delay1;
                     yield return new WaitUntil(() => pause == false);
                 }
                 elementObjectArray[i].GetComponent<Element>().setDefaultMaterial();

@@ -192,7 +192,7 @@ public class LinearSearchSetup : MonoBehaviour
     IEnumerator LinearSearch(){
         bartext.SetText($"Item to find : {key}");
         
-        yield return delay5;
+        yield return delay2;
         yield return new WaitUntil(() => pause == false);
 
         float x = startposx;
@@ -221,11 +221,11 @@ public class LinearSearchSetup : MonoBehaviour
 
             //Lifting the box up            
             yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-            yield return delay4;
+            yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
             bartext.SetText($"is {elementArray[index]} == {key} ?");
-            yield return delay4;
+            yield return delay2;
             yield return new WaitUntil(() => pause == false);
 
             if(elementArray[index] == key){
@@ -244,7 +244,7 @@ public class LinearSearchSetup : MonoBehaviour
                 //Droping the box down
                 yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown(algoSpeed1to10));
                 elementObjectArray[index].GetComponent<Element>().setRedMaterial();
-                yield return delay4;
+                yield return delay1;
                 yield return new WaitUntil(() => pause == false);
                 index++;
             }

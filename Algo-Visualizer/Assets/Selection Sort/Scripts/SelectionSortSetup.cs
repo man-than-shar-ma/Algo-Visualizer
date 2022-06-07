@@ -15,7 +15,8 @@ public class SelectionSortSetup : MonoBehaviour
 
     [SerializeField] private int numOfElements;
 
-    [SerializeField] private Element element;
+    [SerializeField] private Element boxElement;
+    [SerializeField] private Element flagElement;
 
     [SerializeField] private GameObject elementsHolder;
     [SerializeField] private GameObject tilesHolder;
@@ -132,7 +133,7 @@ public class SelectionSortSetup : MonoBehaviour
         int tnumOfElements = numOfElements;
         int i=0;
         while(tnumOfElements!=0){
-            var elementObject = Instantiate(element, new Vector3(x++,y,z), Quaternion.identity);
+            var elementObject = Instantiate(boxElement, new Vector3(x++,y,z), Quaternion.identity);
             elementObject.name = $"Element {totalElements - tnumOfElements}";
             elementObject.transform.parent = elementsHolder.transform;
             // elementObject.elementValueSet((totalElements - numOfElements).ToString());
@@ -148,7 +149,7 @@ public class SelectionSortSetup : MonoBehaviour
         float y = startposy;
         float z = startposz-1;
 
-        var startObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
+        var startObject = Instantiate(flagElement, new Vector3(x, y, z), Quaternion.identity);
         startObject.name = $"Start";
         startObject.tag = "Start";
         startObject.transform.parent = pointerHolder.transform;
@@ -193,6 +194,9 @@ public class SelectionSortSetup : MonoBehaviour
                 agent.GetComponent<NavController>().DropObject(Vector3.zero, elementsHolder.transform, "right");
             }
         }
+
+        elementArray = (int[])originalElementArray.Clone();
+        elementObjectArray = (Transform[])originalElementObjectArray.Clone();
 
         float x = startposx;
         float y = startposy;
@@ -261,7 +265,7 @@ public class SelectionSortSetup : MonoBehaviour
             
             //Lifting the box 1 up            
             yield return StartCoroutine(elementObjectArray[minIndex].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-            yield return delay2;
+            yield return delay1;
             yield return new WaitUntil(() => pause == false);
             
             for(i = step + 1; i < elementArrayLength; i++){
@@ -282,12 +286,12 @@ public class SelectionSortSetup : MonoBehaviour
 
                 //Lifting the box i up            
                 yield return StartCoroutine(elementObjectArray[i].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-                yield return delay2;
+                yield return delay1;
                 yield return new WaitUntil(() => pause == false);
 
                 //Finding min element between index i and minindex
                 bartext.SetText($"is {elementArray[i]} < {elementArray[minIndex]} ?");
-                yield return delay4;
+                yield return delay2;
                 yield return new WaitUntil(() => pause == false);
 
                 if(elementArray[i] < elementArray[minIndex]){
@@ -302,7 +306,7 @@ public class SelectionSortSetup : MonoBehaviour
                     //droping old_min box down
                     yield return StartCoroutine(elementObjectArray[minIndex].GetComponent<Element>().DropElementDown(algoSpeed1to10));
                     elementObjectArray[minIndex].GetComponent<Element>().setDefaultMaterial();
-                    yield return delay2;
+                    yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 
                     minIndex = i;  
@@ -316,7 +320,7 @@ public class SelectionSortSetup : MonoBehaviour
                     //droping box at index i down
                     yield return StartCoroutine(elementObjectArray[i].GetComponent<Element>().DropElementDown(algoSpeed1to10));
                     elementObjectArray[i].GetComponent<Element>().setDefaultMaterial();
-                    yield return delay2;
+                    yield return delay1;
                     yield return new WaitUntil(() => pause == false);                    
                 }
             }

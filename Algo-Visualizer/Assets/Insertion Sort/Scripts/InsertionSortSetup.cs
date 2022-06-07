@@ -15,7 +15,8 @@ public class InsertionSortSetup : MonoBehaviour
 
     [SerializeField] private int numOfElements;
 
-    [SerializeField] private Element element;
+    [SerializeField] private Element boxElement;
+    [SerializeField] private Element flagElement;
 
     [SerializeField] private GameObject elementsHolder;
     [SerializeField] private GameObject tilesHolder;
@@ -132,7 +133,7 @@ public class InsertionSortSetup : MonoBehaviour
         int tnumOfElements = numOfElements;
         int i=0;
         while(tnumOfElements!=0){
-            var elementObject = Instantiate(element, new Vector3(x++,y,z), Quaternion.identity);
+            var elementObject = Instantiate(boxElement, new Vector3(x++,y,z), Quaternion.identity);
             elementObject.name = $"Element {totalElements - tnumOfElements}";
             elementObject.transform.parent = elementsHolder.transform;
             // elementObject.elementValueSet((totalElements - numOfElements).ToString());
@@ -148,7 +149,7 @@ public class InsertionSortSetup : MonoBehaviour
         float y = startposy;
         float z = startposz-1;
 
-        var startObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
+        var startObject = Instantiate(flagElement, new Vector3(x, y, z), Quaternion.identity);
         startObject.name = $"Start";
         startObject.tag = "Start";
         startObject.transform.parent = pointerHolder.transform;
@@ -193,6 +194,9 @@ public class InsertionSortSetup : MonoBehaviour
                 agent.GetComponent<NavController>().DropObject(Vector3.zero, elementsHolder.transform, "right");
             }
         }
+
+        elementArray = (int[])originalElementArray.Clone();
+        elementObjectArray = (Transform[])originalElementObjectArray.Clone();
 
         float x = startposx;
         float y = startposy;
@@ -262,7 +266,7 @@ public class InsertionSortSetup : MonoBehaviour
 
             //Lifting the box up            
             yield return StartCoroutine(elementObjectArray[keyIndex].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-            yield return delay2;
+            yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
             //picking the key box
@@ -294,7 +298,7 @@ public class InsertionSortSetup : MonoBehaviour
 
                 //lift the j box up
                 yield return StartCoroutine(elementObjectArray[j].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-                yield return delay2;
+                yield return delay1;
                 yield return new WaitUntil(() => pause == false);
 
                 //pick the j box in right hand
