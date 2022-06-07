@@ -16,18 +16,28 @@ public class BinarySearchMenuManager : MonoBehaviour
     [SerializeField]
     BinarySearchSetup binarySearchSetup;
 
-    public GameObject alertPanelUI;
-    public TextMeshProUGUI alertText;
-
-    Animator anim;
+    public AlertPanelUI alertPanelUI;
 
     public void goToMainMenu(){
         SceneManager.LoadScene("MainUI");
     }
 
-    void Start(){
-        anim = alertPanelUI.GetComponent<Animator>();
-        anim.keepAnimatorControllerStateOnDisable = false;
+    public void callLoadBinarySearchData(){
+        string xxxText = binarySearchSetup.xxx.text;
+        if(xxxText.Length != 0){
+            BinarySearchData binarySearchData = JSONHandler.loadBinarySearchData(xxxText);
+            if(binarySearchData != null){
+                binarySearchSetup.arraysizeCustom.text = binarySearchData.arraySize;
+                binarySearchSetup.arrayValuesCustom.text = binarySearchData.arrayValues;
+                binarySearchSetup.arrayKeyCustom.text = binarySearchData.keyValue;
+            }
+            else{
+                StartCoroutine(alertPanelUI.alertAnim("alert", $"File Not Found : {JSONHandler.directoryPath}BinarySearchData{xxxText}.json"));
+            }
+        }
+        else{
+            StartCoroutine(alertPanelUI.alertAnim("alert", $"Please enter the JSON file number you want to load"));
+        }
     }
 
     public void goToOnPlayPanel(){
@@ -67,7 +77,7 @@ public class BinarySearchMenuManager : MonoBehaviour
             isErrorFree = true;
         }
         catch(Exception e){
-            StartCoroutine(alertAnim(anim, "alert", alertPanelUI, e));
+            StartCoroutine(alertPanelUI.alertAnim("alert", e));
         }
 
         if(isErrorFree){
@@ -76,26 +86,5 @@ public class BinarySearchMenuManager : MonoBehaviour
             binarySearchSetup.StartBinarySearchSetup();
         }
 
-    }
-
-    IEnumerator alertAnim(Animator anim, string statename, GameObject alertPanelUI, Exception e){
-            alertPanelUI.SetActive(true);
-            alertText.SetText(e.Message);
-        do{
-            yield return null;
-        }
-        while(isAnimationPlaying(anim, statename));
-            alertPanelUI.SetActive(false);
-    }
-
-    
-    bool isAnimationPlaying(Animator anim, string statename){
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName(statename) &&
-        anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class ButtonSoundsManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -26,16 +27,34 @@ public class ButtonSoundsManager : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        btnEnterSound.Play();  
+        try{
+            btnEnterSound.Play();  
+        }
+        catch(Exception e){
+            Debug.Log(e);
+        }
+        
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        btnExitSound.Play();   
+        try{
+            btnExitSound.Play();
+        }
+        catch(Exception e){
+            Debug.Log(e);
+        }
+           
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        btnClickSound.Play();   
+        try{
+            btnClickSound.Play(); 
+        }
+        catch(Exception e){
+            Debug.Log(e);
+        }
+          
     }
 }

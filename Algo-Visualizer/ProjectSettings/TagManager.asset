@@ -7,6 +7,14 @@ TagManager:
   - GameMusic
   - Button
   - ButtonSounds
+  - Element
+  - End
+  - Start
+  - Left
+  - Right
+  - BoxColorSounds
+  - PickDropSounds
+  - LiftUpDownSounds
   layers:
   - Default
   - TransparentFX
@@ -14,7 +22,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - NavMesh Ignore
   - 
   - 
   - 

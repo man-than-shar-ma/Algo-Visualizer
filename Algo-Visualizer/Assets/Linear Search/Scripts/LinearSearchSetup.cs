@@ -13,6 +13,8 @@ public class LinearSearchSetup : MonoBehaviour
 
     [SerializeField] public TMP_InputField arrayKeyCustom;
 
+    [SerializeField] public TMP_InputField xxx;
+
     [SerializeField] private int numOfElements;
 
     [SerializeField] private Element element;
@@ -190,7 +192,7 @@ public class LinearSearchSetup : MonoBehaviour
     IEnumerator LinearSearch(){
         bartext.SetText($"Item to find : {key}");
         
-        yield return delay5;
+        yield return delay2;
         yield return new WaitUntil(() => pause == false);
 
         float x = startposx;
@@ -201,7 +203,7 @@ public class LinearSearchSetup : MonoBehaviour
         while(index<numOfElements){
             Vector3 pos = new Vector3(x++,y,z);
             
-            bartext.SetText($"Moving Agent to index {index}");
+            bartext.SetText($"Moving to index {index}");
 
             elementObjectArray[index].GetComponent<Element>().setYellowMaterial();
 
@@ -219,11 +221,11 @@ public class LinearSearchSetup : MonoBehaviour
 
             //Lifting the box up            
             yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-            yield return delay4;
+            yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
             bartext.SetText($"is {elementArray[index]} == {key} ?");
-            yield return delay4;
+            yield return delay2;
             yield return new WaitUntil(() => pause == false);
 
             if(elementArray[index] == key){
@@ -239,12 +241,10 @@ public class LinearSearchSetup : MonoBehaviour
                 yield return delay2;
                 yield return new WaitUntil(() => pause == false);
                 bartext.SetText($"{key} not found at index {index}");
-                elementObjectArray[index].GetComponent<Element>().setRedMaterial();
-
                 //Droping the box down
                 yield return StartCoroutine(elementObjectArray[index].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-
-                yield return delay4;
+                elementObjectArray[index].GetComponent<Element>().setRedMaterial();
+                yield return delay1;
                 yield return new WaitUntil(() => pause == false);
                 index++;
             }

@@ -16,12 +16,20 @@ public class NavController : MonoBehaviour
 
     public bool isholdingLeft = false;
     public bool isholdingRight = false;
+
+    AudioSource pickBoxSound;
+    AudioSource dropBoxSound;
+    GameObject boxSoundsObj;
   
 
     void Start() {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
+
+        boxSoundsObj = GameObject.FindGameObjectWithTag("PickDropSounds");
+        pickBoxSound = boxSoundsObj.transform.GetChild(0).GetComponent<AudioSource>();
+        dropBoxSound = boxSoundsObj.transform.GetChild(1).GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,7 +56,8 @@ public class NavController : MonoBehaviour
         transform.GetComponent<NavMeshAgent>().SetDestination(pos);
     }
 
-    public IEnumerator lookAtPoint(Vector3 pos, float speed = 1f){
+    public IEnumerator lookAtPoint(Vector3 orgPos, float speed = 1f){
+        Vector3 pos = new Vector3(orgPos.x, transform.position.y, orgPos.z);
         float degreesPerSecond = 90 * Time.deltaTime * speed;
         Vector3 direction = pos - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -76,6 +85,7 @@ public class NavController : MonoBehaviour
         gameObjectTransform.localPosition = Vector3.zero;
         gameObjectTransform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
         gameObjectTransform.localRotation = Quaternion.identity;
+        pickBoxSound.Play();
     }
 
     public void DropObject(Vector3 location, Transform parent, string hand){
@@ -95,5 +105,14 @@ public class NavController : MonoBehaviour
         objectTransform.localRotation = Quaternion.identity;
         objectTransform.GetComponent<BoxCollider>().enabled = true;
         objectTransform.GetComponent<NavMeshObstacle>().enabled = true;
+        dropBoxSound.Play();
+    }
+
+    public GameObject returnHoldedGameObject(string hand){
+        if(hand == "left")
+            return PickObjectTransfomLeft.GetChild(0).gameObject;
+        else if(hand == "right")
+            return PickObjectTransfomRight.GetChild(0).gameObject;
+        return null;
     }
 }

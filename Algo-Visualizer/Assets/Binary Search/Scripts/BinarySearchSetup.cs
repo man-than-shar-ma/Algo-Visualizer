@@ -13,10 +13,12 @@ public class BinarySearchSetup : MonoBehaviour
 
     [SerializeField] public TMP_InputField arrayKeyCustom;
 
+    [SerializeField] public TMP_InputField xxx;
+
     [SerializeField] private int numOfElements;
 
-    [SerializeField] private Element element;
-
+    [SerializeField] private Element boxElement;
+    [SerializeField] private Element flagElement;
     [SerializeField] private GameObject elementsHolder;
     [SerializeField] private GameObject tilesHolder;
     [SerializeField] private GameObject pointerHolder;
@@ -137,7 +139,7 @@ public class BinarySearchSetup : MonoBehaviour
         int tnumOfElements = numOfElements;
         int i=0;
         while(tnumOfElements!=0){
-            var elementObject = Instantiate(element, new Vector3(x++,y,z), Quaternion.identity);
+            var elementObject = Instantiate(boxElement, new Vector3(x++,y,z), Quaternion.identity);
             elementObject.name = $"Element {totalElements - tnumOfElements}";
             elementObject.transform.parent = elementsHolder.transform;
             // elementObject.elementValueSet((totalElements - numOfElements).ToString());
@@ -153,12 +155,12 @@ public class BinarySearchSetup : MonoBehaviour
         float y = startposy;
         float z = startposz-1;
 
-        var leftObject = Instantiate(element, new Vector3(x, y, z), Quaternion.identity);
+        var leftObject = Instantiate(flagElement, new Vector3(x, y, z), Quaternion.identity);
         leftObject.name = $"Left";
         leftObject.transform.parent = pointerHolder.transform;
         leftObject.setElementValue("Left");
 
-        var rightObject = Instantiate(element, new Vector3(x+numOfElements-1, y, z), Quaternion.identity);
+        var rightObject = Instantiate(flagElement, new Vector3(x+numOfElements-1, y, z), Quaternion.identity);
         rightObject.name = $"Right";
         rightObject.transform.parent = pointerHolder.transform;
         rightObject.setElementValue("Right");
@@ -228,7 +230,7 @@ public class BinarySearchSetup : MonoBehaviour
     IEnumerator BinarySearch(){
         bartext.SetText($"Item to find : {key}");
         
-        yield return delay5;
+        yield return delay2;
         yield return new WaitUntil(() => pause == false);
 
         float x = startposx;
@@ -249,7 +251,7 @@ public class BinarySearchSetup : MonoBehaviour
             int mid = (left + right)/2;
             
             Vector3 pos = new Vector3(midPos, y, z);
-            bartext.SetText($"Moving Agent to index {mid}");
+            bartext.SetText($"Moving to index {mid}");
 
             elementObjectArray[mid].GetComponent<Element>().setYellowMaterial();
             agent.GetComponent<NavController>().moveToVector3(pos);
@@ -264,11 +266,11 @@ public class BinarySearchSetup : MonoBehaviour
 
             //Lifting the box up            
             yield return StartCoroutine(elementObjectArray[mid].GetComponent<Element>().LiftElementUp(algoSpeed1to10));
-            yield return delay4;
+            yield return delay1;
             yield return new WaitUntil(() => pause == false);
 
             bartext.SetText($"is {elementArray[mid]} == {key} ?");
-            yield return delay4;
+            yield return delay2;
             yield return new WaitUntil(() => pause == false);
 
             if(elementArray[mid] == key){
@@ -285,7 +287,7 @@ public class BinarySearchSetup : MonoBehaviour
                 yield return new WaitUntil(() => pause == false);
 
                 bartext.SetText($"is {elementArray[mid]} < {key} ?");
-                yield return delay4;
+                yield return delay2;
                 yield return new WaitUntil(() => pause == false);
 
                 if(elementArray[mid] < key){
@@ -294,15 +296,14 @@ public class BinarySearchSetup : MonoBehaviour
                     yield return new WaitUntil(() => pause == false);
                     bartext.SetText($"{key} should be after index {mid}");
 
-                    elementObjectArray[mid].GetComponent<Element>().setRedMaterial();
-
                     //Droping the box down
                     yield return StartCoroutine(elementObjectArray[mid].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-                    yield return delay4;
+                    elementObjectArray[mid].GetComponent<Element>().setRedMaterial();
+                    yield return delay1;    
                     yield return new WaitUntil(() => pause == false);
 
                     pos = new Vector3(leftPos, y, z);
-                    bartext.SetText($"Moving Agent to Left pointer");
+                    bartext.SetText($"Moving Left pointer to index {mid} + 1 = {mid+1}");
                     leftTrans.GetComponent<Element>().setYellowMaterial();
                     agent.GetComponent<NavController>().moveToVector3(pos);
                     yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
@@ -326,7 +327,6 @@ public class BinarySearchSetup : MonoBehaviour
                     StartCoroutine(colorRedLTOR(oldLeft, mid));
 
                     pos = new Vector3(leftPos, y, z);
-                    bartext.SetText($"Moving Left pointer to index {mid} + 1 = {left}");
                     agent.GetComponent<NavController>().moveToVector3(pos);
                     yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
                     yield return delay1;
@@ -355,11 +355,11 @@ public class BinarySearchSetup : MonoBehaviour
 
                     //Droping the box down
                     yield return StartCoroutine(elementObjectArray[mid].GetComponent<Element>().DropElementDown(algoSpeed1to10));
-                    yield return delay4;
+                    yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 
                     pos = new Vector3(rightPos, y, z);
-                    bartext.SetText($"Moving Agent to Right pointer");
+                    bartext.SetText($"Moving Right pointer to index {mid} - 1 = {mid-1}");
                     rightTrans.GetComponent<Element>().setYellowMaterial();
                     agent.GetComponent<NavController>().moveToVector3(pos);
                     yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
@@ -383,7 +383,6 @@ public class BinarySearchSetup : MonoBehaviour
                     StartCoroutine(colorRedRTOL(oldRight, mid));
 
                     pos = new Vector3(rightPos, y, z);
-                    bartext.SetText($"Moving Right pointer to index {mid} - 1 = {right}");
                     agent.GetComponent<NavController>().moveToVector3(pos);
                     yield return new WaitUntil(() => (agent.transform.position - pos).magnitude < 0.1);
                     yield return delay1;
@@ -394,7 +393,7 @@ public class BinarySearchSetup : MonoBehaviour
                     yield return delay1;
                     yield return new WaitUntil(() => pause == false);
 
-                    //droping left pointer
+                    //droping right pointer
                     agent.GetComponent<NavController>().DropObject(lookpos, pointerHolder.transform, "right");
                     yield return delay1;
                     yield return new WaitUntil(() => pause == false);
